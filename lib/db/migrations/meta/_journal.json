@@ -1,0 +1,111 @@
+{
+  "version": "5",
+  "dialect": "mysql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1707357779863,
+      "tag": "0000_bitter_surge",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1707359899188,
+      "tag": "0001_foamy_expediter",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1707360776862,
+      "tag": "0002_square_zaladane",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1707360866863,
+      "tag": "0003_loose_hellion",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1707360925003,
+      "tag": "0004_lazy_rocket_racer",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1707361213691,
+      "tag": "0005_living_storm",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1707361234223,
+      "tag": "0006_typical_robin_chapel",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "5",
+      "when": 1707362486513,
+      "tag": "0007_omniscient_vampiro",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "5",
+      "when": 1707444514460,
+      "tag": "0008_fancy_thaddeus_ross",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "5",
+      "when": 1707527571146,
+      "tag": "0009_dashing_morbius",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "5",
+      "when": 1707527734195,
+      "tag": "0010_remarkable_madripoor",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "5",
+      "when": 1708993304109,
+      "tag": "0011_nasty_rawhide_kid",
+      "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "5",
+      "when": 1708993505932,
+      "tag": "0012_special_power_pack",
+      "breakpoints": true
+    },
+    {
+      "idx": 13,
+      "version": "5",
+      "when": 1708999760319,
+      "tag": "0013_dear_dexter_bennett",
+      "breakpoints": true
+    },
+    {
+      "idx": 14,
+      "version": "5",
+      "when": 1709253757650,
+      "tag": "0014_cooing_morgan_stark",
+      "breakpoints": true
+    }
+  ]
+}

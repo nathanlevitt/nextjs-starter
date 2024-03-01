@@ -1,14 +1,26 @@
-import { createEnv } from "@t3-oss/env-nextjs";
 import { z } from "zod";
+import { webcrypto } from "node:crypto";
 
-export const env = createEnv({
-  server: {
-    NODE_ENV: z
-      .enum(["development", "test", "production"])
-      .default("development"),
-    // DATABASE_URL: z.string().min(1),
-    JWT_SECRET_KEY: z.string().min(1),
-  },
-  client: {},
-  experimental__runtimeEnv: {},
+globalThis.crypto = webcrypto as Crypto;
+
+const envVariables = z.object({
+  NODE_ENV: z
+    .enum(["development", "test", "production"])
+    .default("development"),
+  JWT_SECRET_KEY: z.string().min(1),
+  JWT_REFRESH_SECRET_KEY: z.string().min(1),
+  DATABASE_URL: z.string().min(1),
+  DATABASE_HOST: z.string().min(1),
+  DATABASE_USERNAME: z.string().min(1),
+  DATABASE_PASSWORD: z.string().min(1),
+  DATABASE_NAME: z.string().min(1),
 });
+
+// Validate that the environment variables are set
+envVariables.parse(process.env);
+
+declare global {
+  namespace NodeJS {
+    interface ProcessEnv extends z.infer<typeof envVariables> {}
+  }
+}
