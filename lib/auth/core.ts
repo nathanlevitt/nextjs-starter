@@ -33,7 +33,7 @@ export class Auth {
   public readonly sessionCookieName: string;
 
   constructor(options?: {
-    sessionExpiresIn: TimeSpan;
+    sessionExpiresIn?: TimeSpan;
     sessionCookie?: SessionCookieOptions;
   }) {
     this.sessionExpiresIn = options?.sessionExpiresIn ?? new TimeSpan(30, "d");

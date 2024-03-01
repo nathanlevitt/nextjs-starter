@@ -41,7 +41,6 @@ export const validateRequest = cache(
 
     const result = await auth.validateSession(sessionId);
 
-    // Next.js throws when you attempt to set cookie when rendering page
     try {
       if (result.session && result.session.fresh) {
         const sessionCookie = auth.createSessionCookie(result.session.id);
@@ -59,7 +58,9 @@ export const validateRequest = cache(
           sessionCookie.attributes
         );
       }
-    } catch {}
+    } catch {
+      // Next.js throws when you attempt to set cookie when rendering page
+    }
     return result;
   }
 );
