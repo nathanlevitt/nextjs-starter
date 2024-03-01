@@ -1,7 +1,4 @@
 import { z } from "zod";
-import { webcrypto } from "node:crypto";
-
-globalThis.crypto = webcrypto as Crypto;
 
 const envVariables = z.object({
   NODE_ENV: z

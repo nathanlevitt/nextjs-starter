@@ -33,7 +33,7 @@ export const usersRelations = relations(users, ({ many }) => ({
 }));
 
 export const sessions = mysqlTable("sessions", {
-  id: varchar("id", { length: 255 }).primaryKey().notNull(),
+  id: varchar("id", { length: 255 }).primaryKey(),
   userId: int("user_id").notNull(),
   expiresAt: timestamp("expires_at").notNull(),
 });
