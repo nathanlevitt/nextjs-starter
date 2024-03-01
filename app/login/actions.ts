@@ -7,7 +7,7 @@ import { loginSchema } from "@/lib/zod";
 import { eq } from "drizzle-orm";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { Argon2id } from "oslo/password";
+import bcrypt from "bcrypt";
 
 export async function login(prevState: unknown, formData: FormData) {
   const data = {
@@ -28,10 +28,7 @@ export async function login(prevState: unknown, formData: FormData) {
     return { error: "Incorrect email or password." };
   }
 
-  const validPassword = await new Argon2id().verify(
-    existingUser.password,
-    password
-  );
+  const validPassword = await bcrypt.compare(password, existingUser.password);
   if (!validPassword) {
     return { error: "Incorrect email or password." };
   }

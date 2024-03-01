@@ -6,7 +6,7 @@ import { users } from "@/lib/db/schema/users";
 import { signupSchema } from "@/lib/zod";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { Argon2id } from "oslo/password";
+import bcrypt from "bcrypt";
 
 export async function signup(prevState: unknown, formData: FormData) {
   const data = {
@@ -23,7 +23,7 @@ export async function signup(prevState: unknown, formData: FormData) {
   }
 
   const { email, name, password } = parsedData.data;
-  const hashedPassword = await new Argon2id().hash(password);
+  const hashedPassword = await bcrypt.hash(password, 10);
 
   let userId: UserId;
   try {
