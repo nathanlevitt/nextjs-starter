@@ -24,7 +24,6 @@ export const auth = new Auth({
       secure: process.env.NODE_ENV === "production",
     },
   },
-  sessionExpiresIn: new TimeSpan(1, "m"),
 });
 
 export const validateRequest = cache(
