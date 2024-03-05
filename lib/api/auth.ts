@@ -1,7 +1,7 @@
 import { InferSelectModel, eq, lte } from "drizzle-orm";
 import { AuthSession, AuthUser, SessionId, UserId } from "@/lib/auth";
 import { db } from "@/lib/db";
-import { sessions } from "@/lib/db/schema/users";
+import { sessions } from "@/lib/db/schema";
 import { users } from "@/lib/db/migrations/schema";
 
 export type DatabaseUser = AuthUser;

@@ -7,12 +7,12 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "db:generate": "drizzle-kit generate:mysql",
-    "db:migrate": "drizzle-kit push:mysql",
-    "db:drop": "drizzle-kit drop",
-    "db:pull": "drizzle-kit introspect:mysql",
-    "db:studio": "drizzle-kit studio",
-    "db:check": "drizzle-kit check:mysql"
+    "db:generate": "dotenv -e .env.local drizzle-kit generate:mysql",
+    "db:migrate": "dotenv -e .env.local drizzle-kit push:mysql",
+    "db:drop": "dotenv -e .env.local drizzle-kit drop",
+    "db:pull": "dotenv -e .env.local drizzle-kit introspect:mysql",
+    "db:studio": "dotenv -e .env.local drizzle-kit studio",
+    "db:check": "dotenv -e .env.local drizzle-kit check:mysql"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
@@ -44,6 +44,7 @@
     "@types/react-dom": "^18",
     "autoprefixer": "^10.0.1",
     "dotenv": "^16.4.1",
+    "dotenv-cli": "^7.3.0",
     "drizzle-kit": "^0.20.14",
     "eslint": "^8",
     "eslint-config-next": "14.1.0",

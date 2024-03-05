@@ -4,7 +4,7 @@ import { InferSelectModel } from "drizzle-orm";
 import { TimeSpan } from "oslo";
 
 import { Auth } from "@/lib/auth/core";
-import { sessions, users } from "@/lib/db/schema/users";
+import { sessions, users } from "@/lib/db/schema";
 
 export type User = InferSelectModel<typeof users>;
 export type Session = InferSelectModel<typeof sessions>;
