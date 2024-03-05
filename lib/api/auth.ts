@@ -26,7 +26,7 @@ export async function getSessionAndUser(
     .from(sessions)
     .innerJoin(users, eq(sessions.userId, users.id))
     .where(eq(sessions.id, sessionId));
-  if (result.length !== 1) return [null, null];
+  if (!result[0]) return [null, null];
   return [
     transformIntoDatabaseSession(result[0].session),
     transformIntoDatabaseUser(result[0].user),
