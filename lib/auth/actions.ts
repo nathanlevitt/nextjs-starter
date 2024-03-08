@@ -1,15 +1,22 @@
 "use server";
 
 import bcrypt from "bcrypt";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { eq } from "drizzle-orm";
+import { z } from "zod";
 
-import { loginSchema, signupSchema } from "@/lib/validators/auth";
-import { User, users } from "@/lib/db/schema";
 import { db } from "@/lib/db";
-import { auth } from "@/lib/auth";
+import { env } from "@/lib/env";
+import { absoluteUrl } from "@/lib/utils";
 import { redirects } from "@/lib/constants";
+import { User, users } from "@/lib/db/schema";
+import { auth, validateRequest } from "@/lib/auth";
+import { loginSchema, signupSchema } from "@/lib/validators/auth";
+import { generateResetPasswordToken } from "@/lib/api/auth";
+
+import { sendMail } from "@/lib/email/send-email";
+import { renderResetPasswordEmail } from "@/lib/email/templates/reset-password";
 
 export async function login(prevState: unknown, formData: FormData) {
   const data = {
@@ -85,4 +92,70 @@ export async function signup(prevState: unknown, formData: FormData) {
     sessionCookie.attributes
   );
   return redirect(redirects.afterLogin);
+}
+
+export async function logout() {
+  const { session } = await validateRequest();
+  if (!session) {
+    return {
+      error: "No session found.",
+    };
+  }
+
+  await auth.invalidateSession(session.id);
+  const sessionCookie = auth.createBlankSessionCookie();
+  cookies().set(
+    sessionCookie.name,
+    sessionCookie.value,
+    sessionCookie.attributes
+  );
+  return redirect(redirects.afterLogout);
+}
+
+export async function sendPasswordResetLink(
+  prevState: unknown,
+  formData: FormData
+): Promise<{ success?: boolean; error?: string }> {
+  const raw = formData.get("email");
+  const email = z.string().trim().email().safeParse(raw);
+  if (!email.success) {
+    return { error: "Invalid email." };
+  }
+
+  try {
+    const ipAddress =
+      headers().get("x-real-ip") ||
+      headers().get("x-forwarded-for") ||
+      "0.0.0.0";
+
+    const user = await db.query.users.findFirst({
+      where: (table, { eq }) => eq(table.email, email.data),
+    });
+    console.log("User:", user);
+
+    if (!user) {
+      return { error: "Invalid email." };
+    }
+
+    const verificationToken = await generateResetPasswordToken(user.id);
+    const verificationLink = absoluteUrl(
+      `/reset-password/${verificationToken}`
+    );
+
+    const mail = await sendMail({
+      to: user.email,
+      subject: "Reset your password",
+      body: renderResetPasswordEmail({
+        name: user.name,
+        link: verificationLink,
+        ipAddress,
+      }),
+    });
+    console.log("Mail:", mail);
+
+    return { success: true };
+  } catch (error) {
+    console.error(error);
+    return { error: "Failed to send reset password email." };
+  }
 }

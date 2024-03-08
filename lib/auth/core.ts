@@ -2,7 +2,7 @@ import { TimeSpan, createDate, isWithinExpirationDate } from "oslo";
 import { Cookie, CookieAttributes, CookieController } from "oslo/cookie";
 
 import { AuthSession, AuthUser, SessionId, UserId } from "@/lib/auth";
-import { generateId } from "@/lib/auth/utils";
+import { generateId } from "@/lib/utils";
 import {
   deleteExpiredSessions,
   deleteSession,

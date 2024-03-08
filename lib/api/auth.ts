@@ -1,8 +1,10 @@
 import { InferSelectModel, eq, lte } from "drizzle-orm";
 import { AuthSession, AuthUser, SessionId, UserId } from "@/lib/auth";
 import { db } from "@/lib/db";
-import { sessions } from "@/lib/db/schema";
+import { passwordResetTokens, sessions } from "@/lib/db/schema";
 import { users } from "@/lib/db/migrations/schema";
+import { generateId } from "@/lib/utils";
+import { TimeSpan, createDate } from "oslo";
 
 export type DatabaseUser = AuthUser;
 export type DatabaseSession = Omit<AuthSession, "fresh">;
@@ -67,6 +69,20 @@ export async function updateSessionExpiration(
 
 export async function deleteExpiredSessions(): Promise<void> {
   await db.delete(sessions).where(lte(sessions.expiresAt, new Date()));
+}
+
+export async function generateResetPasswordToken(userId: UserId) {
+  await db
+    .delete(passwordResetTokens)
+    .where(eq(passwordResetTokens.userId, userId));
+  const tokenId = await generateId(40);
+  const expiresAt = createDate(new TimeSpan(2, "h"));
+  await db.insert(passwordResetTokens).values({
+    id: tokenId,
+    userId,
+    expiresAt,
+  });
+  return tokenId;
 }
 
 function transformIntoDatabaseSession(

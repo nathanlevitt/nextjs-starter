@@ -44,18 +44,7 @@ export function Signup() {
           </div>
 
           <div className="grid gap-2.5">
-            <Label
-              htmlFor="password"
-              className="flex items-end justify-between"
-            >
-              Password
-              <Link
-                href="/forgot-password"
-                className="text-xs leading-none text-primary underline-offset-4 hover:underline"
-              >
-                Forgot password?
-              </Link>
-            </Label>
+            <Label htmlFor="password">Password</Label>
             <Input type="password" id="password" name="password" />
           </div>
 

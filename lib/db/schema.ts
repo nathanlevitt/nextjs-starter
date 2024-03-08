@@ -65,7 +65,7 @@ export const passwordResetTokens = mysqlTable(
   "password_reset_tokens",
   {
     id: varchar("id", { length: 40 }).primaryKey(),
-    userId: varchar("user_id", { length: 21 }).notNull(),
+    userId: int("user_id").notNull(),
     expiresAt: datetime("expires_at").notNull(),
   },
   (t) => ({
