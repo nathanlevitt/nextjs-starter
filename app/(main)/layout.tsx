@@ -1,3 +1,5 @@
+import { Header } from "./_components/header";
+
 export default function MainLayout({
   children,
 }: {
@@ -5,7 +7,7 @@ export default function MainLayout({
 }) {
   return (
     <>
-      {/* <Header /> */}
+      <Header />
       {children}
       {/* <Footer /> */}
     </>

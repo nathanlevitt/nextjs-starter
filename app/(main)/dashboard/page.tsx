@@ -6,5 +6,5 @@ export default async function DashboardPage() {
   const { user } = await validateRequest();
   if (!user) redirect(redirects.toLogin);
 
-  return <h1>Hi, {user.name}!</h1>;
+  return <h1 className="py-4 container text-sm font-medium">Dashboard</h1>;
 }

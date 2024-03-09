@@ -1,15 +1,16 @@
 "use client";
 
 import { SubmitButton } from "@/components/submit-button";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { sendPasswordResetLink } from "@/lib/auth/actions";
 import { redirects } from "@/lib/constants";
+import { AlertTriangle, CheckCircle } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useFormState } from "react-dom";
+import { toast } from "sonner";
 
 const initialState = {
   error: "",
@@ -22,9 +23,17 @@ export function ForgotPassword() {
 
   useEffect(() => {
     if (state.success) {
+      toast("Password reset link sent!", {
+        icon: <CheckCircle className="h-4 w-4" />,
+      });
       router.push(redirects.toLogin);
     }
-  }, [router, state.success]);
+    if (state.error) {
+      toast(state.error, {
+        icon: <AlertTriangle className="h-4 w-4 text-destructive" />,
+      });
+    }
+  }, [router, state.error, state.success]);
 
   return (
     <div className="space-y-4">

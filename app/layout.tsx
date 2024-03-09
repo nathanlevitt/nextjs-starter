@@ -2,9 +2,10 @@ import "@/styles/globals.css";
 
 import type { Metadata } from "next";
 
-import { ThemeProvider } from "@/components/theme-provider";
 import { cn } from "@/lib/utils";
 import { fontSans } from "@/lib/fonts";
+import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "@/components/ui/sonner";
 import { APP_TITLE } from "@/lib/constants";
 
 export const metadata: Metadata = {
@@ -39,6 +40,7 @@ export default function RootLayout({
           <div vaul-drawer-wrapper="">
             <div className="relative flex flex-col min-h-screen bg-background">
               <main className="flex-1">{children}</main>
+              <Toaster />
             </div>
           </div>
         </ThemeProvider>
