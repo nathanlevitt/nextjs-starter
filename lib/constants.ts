@@ -4,8 +4,9 @@ export const EMAIL_SENDER = '"Nate" <noreply@trudine.com>';
 export const redirects = {
   toLogin: "/login",
   toSignup: "/signup",
-  afterLogin: "/dashboard",
+  afterLogin: (username: string) => `/${username}`,
   afterLogout: "/",
+  afterResetPassword: "/",
   toVerify: "/verify-email",
-  afterVerify: "/dashboard",
+  afterVerify: "/",
 } as const;

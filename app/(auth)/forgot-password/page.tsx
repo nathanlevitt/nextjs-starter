@@ -7,7 +7,7 @@ import { ForgotPassword } from "./forgot-password";
 export default async function ForgotPasswordPage() {
   const { user } = await validateRequest();
 
-  if (user) redirect(redirects.afterLogin);
+  if (user) redirect(redirects.afterLogin(user.username));
 
   return <ForgotPassword />;
 }

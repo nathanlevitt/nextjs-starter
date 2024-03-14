@@ -6,7 +6,7 @@ import { Login } from "./login";
 export default async function LoginPage() {
   const { user } = await validateRequest();
 
-  if (user) redirect(redirects.afterLogin);
+  if (user) redirect(redirects.afterLogin(user.username));
 
   return <Login />;
 }

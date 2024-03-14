@@ -1,4 +1,4 @@
-export default async function DashboardLayout({
+export default async function SlugLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

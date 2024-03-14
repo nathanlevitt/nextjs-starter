@@ -58,7 +58,7 @@ export async function login(prevState: unknown, formData: FormData) {
     sessionCookie.value,
     sessionCookie.attributes
   );
-  return redirect(redirects.afterLogin);
+  return redirect(redirects.afterLogin(existingUser.username));
 }
 
 export async function signup(prevState: unknown, formData: FormData) {
@@ -99,7 +99,7 @@ export async function signup(prevState: unknown, formData: FormData) {
     sessionCookie.value,
     sessionCookie.attributes
   );
-  return redirect(redirects.afterLogin);
+  return redirect(redirects.afterLogin(username));
 }
 
 export async function logout() {
@@ -168,7 +168,7 @@ export async function resetPassword(prevState: unknown, formData: FormData) {
     sessionCookie.value,
     sessionCookie.attributes
   );
-  redirect(redirects.afterLogin);
+  redirect(redirects.afterResetPassword);
 }
 
 export async function sendPasswordResetLink(

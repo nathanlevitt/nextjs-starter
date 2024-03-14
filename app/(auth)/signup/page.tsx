@@ -8,7 +8,7 @@ import { Signup } from "./signup";
 export default async function SignupPage() {
   const { user } = await validateRequest();
 
-  if (user) redirect(redirects.afterLogin);
+  if (user) redirect(redirects.afterLogin(user.username));
 
   return <Signup />;
 }
