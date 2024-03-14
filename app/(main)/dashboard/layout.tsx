@@ -3,5 +3,9 @@ export default async function DashboardLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <section>{children}</section>;
+  return (
+    <section className="grid flex-col items-center justify-center max-w-5xl gap-4 py-10 mx-auto text-center md:py-12">
+      {children}
+    </section>
+  );
 }

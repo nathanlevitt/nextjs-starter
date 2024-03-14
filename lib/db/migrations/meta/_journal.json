@@ -120,6 +120,20 @@
       "when": 1709939981468,
       "tag": "0016_furry_lilandra",
       "breakpoints": true
+    },
+    {
+      "idx": 17,
+      "version": "5",
+      "when": 1710378369145,
+      "tag": "0017_happy_eddie_brock",
+      "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "5",
+      "when": 1710378794393,
+      "tag": "0018_nice_silver_sable",
+      "breakpoints": true
     }
   ]
 }

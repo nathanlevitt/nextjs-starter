@@ -17,12 +17,12 @@ import { APP_TITLE } from "@/lib/constants";
 import { absoluteUrl } from "@/lib/utils";
 
 interface Props {
-  name: string;
+  username: string;
   link: string;
   ipAddress: string;
 }
 
-export const ResetPasswordEmail = ({ name, link, ipAddress }: Props) => {
+export const ResetPasswordEmail = ({ username, link, ipAddress }: Props) => {
   const previewText = `Reset your password for ${APP_TITLE}`;
 
   return (
@@ -42,7 +42,7 @@ export const ResetPasswordEmail = ({ name, link, ipAddress }: Props) => {
               />
             </Section>
             <Text className="text-black text-[14px] leading-[24px]">
-              Hello {name},
+              Hello {username},
             </Text>
             <Text className="text-black text-[14px] leading-[24px]">
               Someone recently requested a password change for your {APP_TITLE}{" "}
@@ -65,10 +65,10 @@ export const ResetPasswordEmail = ({ name, link, ipAddress }: Props) => {
             <Hr className="border border-solid border-[#eaeaea] my-[26px] mx-0 w-full" />
             <Text className="text-[#666666] text-[12px] leading-[24px]">
               This invitation was intended for{" "}
-              <span className="text-black">{name}</span>. This invite was sent
-              from <span className="text-black">{ipAddress}</span>. If you were
-              not expecting this password reset, you can ignore and delete this
-              email. If you are concerned about your account&apos;s safety,
+              <span className="text-black">{username}</span>. This invite was
+              sent from <span className="text-black">{ipAddress}</span>. If you
+              were not expecting this password reset, you can ignore and delete
+              this email. If you are concerned about your account&apos;s safety,
               please reply to this email to get in touch with us.
             </Text>
           </Container>
@@ -78,5 +78,11 @@ export const ResetPasswordEmail = ({ name, link, ipAddress }: Props) => {
   );
 };
 
-export const renderResetPasswordEmail = ({ link, name, ipAddress }: Props) =>
-  render(<ResetPasswordEmail link={link} name={name} ipAddress={ipAddress} />);
+export const renderResetPasswordEmail = ({
+  link,
+  username,
+  ipAddress,
+}: Props) =>
+  render(
+    <ResetPasswordEmail link={link} username={username} ipAddress={ipAddress} />
+  );

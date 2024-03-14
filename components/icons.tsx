@@ -1,4 +1,5 @@
 import React from "react";
+import { ArrowRight, Slash } from "lucide-react";
 
 export type IconProps = React.SVGProps<SVGSVGElement>;
 
@@ -18,4 +19,7 @@ export const Icons = {
       />
     </svg>
   ),
+
+  arrowRight: ArrowRight,
+  slash: Slash,
 };

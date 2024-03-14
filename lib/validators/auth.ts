@@ -11,10 +11,10 @@ export type SignupInput = z.infer<typeof signupSchema>;
 
 export const signupSchema = z.object({
   email: z.string().email("Please enter a valid email."),
-  name: z
+  username: z
     .string()
     .trim()
-    .min(3, "Name must be at least 3 characters.")
+    .min(3, "Username must be at least 3 characters.")
     .max(255),
   password: z
     .string()

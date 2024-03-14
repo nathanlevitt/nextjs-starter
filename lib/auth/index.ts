@@ -11,7 +11,7 @@ export type Session = InferSelectModel<typeof sessions>;
 export type UserId = User["id"];
 export type SessionId = Session["id"];
 
-export type AuthUser = Pick<User, "id" | "email" | "name">;
+export type AuthUser = Pick<User, "id" | "email" | "username" | "name">;
 export type AuthSession = Pick<Session, "id" | "userId" | "expiresAt"> & {
   fresh: boolean;
 };

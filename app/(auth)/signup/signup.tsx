@@ -39,8 +39,8 @@ export function Signup() {
           </div>
 
           <div className="grid gap-2.5">
-            <Label htmlFor="name">Name</Label>
-            <Input type="text" id="name" name="name" />
+            <Label htmlFor="username">Username</Label>
+            <Input type="text" id="username" name="username" />
           </div>
 
           <div className="grid gap-2.5">

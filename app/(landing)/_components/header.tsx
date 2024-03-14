@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { APP_TITLE, redirects } from "@/lib/constants";
 import { Icons } from "@/components/icons";
+import { Button } from "@/components/ui/button";
 
 export function Header() {
   return (
@@ -14,12 +15,16 @@ export function Header() {
         >
           <Icons.logo className="mr-2 h-5 w-5 shrink-0" /> {APP_TITLE}
         </Link>
-        <div className="ml-auto flex items-center space-x-4">
-          <Link
-            className="text-primary text-sm inline-flex items-center justify-center underline-offset-4 whitespace-nowrap font-medium hover:underline"
-            href={redirects.toLogin}
-          >
-            Log in
+        <div className="ml-auto flex items-center space-x-1">
+          <Link href={redirects.toLogin}>
+            <Button variant="link">Log in</Button>
+          </Link>
+
+          <Link href={redirects.toSignup}>
+            <Button variant="default">
+              Get started
+              <Icons.arrowRight className="ml-1 h-4 w-4" />
+            </Button>
           </Link>
         </div>
       </div>

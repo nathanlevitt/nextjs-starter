@@ -113,6 +113,7 @@ export class Auth {
     const user: AuthUser = {
       id: databaseUser.id,
       email: databaseUser.email,
+      username: databaseUser.username,
       name: databaseUser.name,
     };
     return { user, session };

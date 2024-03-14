@@ -9,7 +9,7 @@ export default async function Home() {
 
   return (
     <section className="grid flex-col items-center justify-center max-w-5xl gap-4 py-10 mx-auto text-center md:py-12">
-      <p>Nate&apos;s Next.js Starter</p>
+      <p className="text-sm font-medium">Landing page</p>
     </section>
   );
 }

@@ -14,9 +14,10 @@ export const users = mysqlTable(
   "users",
   {
     id: serial("id").primaryKey(),
-    name: varchar("name", { length: 255 }).notNull(),
+    name: varchar("name", { length: 255 }),
     email: varchar("email", { length: 255 }).unique().notNull(),
     emailVerified: boolean("email_verified").default(false).notNull(),
+    username: varchar("username", { length: 255 }).unique().notNull(),
     password: varchar("password", { length: 255 }).notNull(),
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at").onUpdateNow(),

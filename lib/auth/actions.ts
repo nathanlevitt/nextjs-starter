@@ -64,7 +64,7 @@ export async function login(prevState: unknown, formData: FormData) {
 export async function signup(prevState: unknown, formData: FormData) {
   const data = {
     email: formData.get("email"),
-    name: formData.get("name"),
+    username: formData.get("username"),
     password: formData.get("password"),
   };
 
@@ -75,18 +75,19 @@ export async function signup(prevState: unknown, formData: FormData) {
     };
   }
 
-  const { email, name, password } = parsedData.data;
+  const { email, username, password } = parsedData.data;
   const hashedPassword = await bcrypt.hash(password, 10);
 
   let userId: User["id"];
   try {
     const user = await db.insert(users).values({
       email,
-      name,
+      username,
       password: hashedPassword,
     });
     userId = Number(user.insertId);
   } catch (error) {
+    console.error(error);
     return { error: "An account with that email already exists." };
   }
 
@@ -204,7 +205,7 @@ export async function sendPasswordResetLink(
       to: user.email,
       subject: "Reset your password",
       body: renderResetPasswordEmail({
-        name: user.name,
+        username: user.username,
         link: verificationLink,
         ipAddress,
       }),

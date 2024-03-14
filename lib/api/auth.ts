@@ -1,8 +1,7 @@
 import { InferSelectModel, eq, lte } from "drizzle-orm";
 import { AuthSession, AuthUser, SessionId, UserId } from "@/lib/auth";
 import { db } from "@/lib/db";
-import { passwordResetTokens, sessions } from "@/lib/db/schema";
-import { users } from "@/lib/db/migrations/schema";
+import { passwordResetTokens, sessions, users } from "@/lib/db/schema";
 import { generateId } from "@/lib/utils";
 import { TimeSpan, createDate } from "oslo";
 
@@ -99,10 +98,11 @@ function transformIntoDatabaseSession(
 function transformIntoDatabaseUser(
   raw: InferSelectModel<typeof users>
 ): DatabaseUser {
-  const { id, email, name } = raw;
+  const { id, email, username, name } = raw;
   return {
     id,
     email,
+    username,
     name,
   };
 }
