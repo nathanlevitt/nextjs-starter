@@ -3,10 +3,13 @@ import Link from "next/link";
 import { validateRequest } from "@/lib/auth";
 import { Icons } from "@/components/icons";
 import { UserDropdown } from "./user-dropdown";
+import { getUserById } from "@/lib/api/user";
 
 export async function Header() {
-  const { user } = await validateRequest();
-  if (!user) return null;
+  const { user: authUser } = await validateRequest();
+  if (!authUser) return null;
+
+  const user = await getUserById(authUser.id);
 
   return (
     <header className="sticky top-0 z-10 border-b bg-background/80 p-0">
@@ -23,9 +26,7 @@ export async function Header() {
         </div>
 
         <div className="ml-auto flex items-center space-x-4">
-          {user ? (
-            <UserDropdown email={user.email} name={user.username} />
-          ) : null}
+          {user ? <UserDropdown user={user} /> : null}
         </div>
       </div>
     </header>

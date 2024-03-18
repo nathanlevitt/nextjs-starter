@@ -13,14 +13,17 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { User } from "@/lib/auth";
 import { logout } from "@/lib/auth/actions";
+import { redirects } from "@/lib/constants";
+import Link from "next/link";
 
 interface UserDropdownProps {
-  email: string;
-  name: string;
+  user: User;
 }
 
-export function UserDropdown({ email, name }: UserDropdownProps) {
+export function UserDropdown({ user }: UserDropdownProps) {
+  const name = user.name || user.username;
   const initials = name
     .split(" ")
     .map((n) => n[0])
@@ -32,7 +35,7 @@ export function UserDropdown({ email, name }: UserDropdownProps) {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-8 w-8 rounded-full">
           <Avatar className="h-8 w-8">
-            <AvatarImage src="/avatars/01.png" alt={name} />
+            <AvatarImage src={user.avatar ?? undefined} alt={name} />
             <AvatarFallback>{initials}</AvatarFallback>
           </Avatar>
         </Button>
@@ -42,7 +45,7 @@ export function UserDropdown({ email, name }: UserDropdownProps) {
           <div className="flex flex-col space-y-1">
             <p className="text-sm font-medium leading-none">{name}</p>
             <p className="text-xs leading-none text-muted-foreground">
-              {email}
+              {user.email}
             </p>
           </div>
         </DropdownMenuLabel>
@@ -56,10 +59,9 @@ export function UserDropdown({ email, name }: UserDropdownProps) {
             Billing
             <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            Settings
-            <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
-          </DropdownMenuItem>
+          <Link href={redirects.toSettings}>
+            <DropdownMenuItem>Settings</DropdownMenuItem>
+          </Link>
           <DropdownMenuItem>New Team</DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />

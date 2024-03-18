@@ -7,7 +7,7 @@ export const loginSchema = z.object({
     .min(8, "Password must be at least 8 characters.")
     .max(255),
 });
-export type SignupInput = z.infer<typeof signupSchema>;
+export type LoginInput = z.infer<typeof loginSchema>;
 
 export const signupSchema = z.object({
   email: z.string().email("Please enter a valid email."),
@@ -21,7 +21,7 @@ export const signupSchema = z.object({
     .min(8, "Password must be at least 8 characters.")
     .max(255),
 });
-export type LoginInput = z.infer<typeof loginSchema>;
+export type SignupInput = z.infer<typeof signupSchema>;
 
 export const forgotPasswordSchema = z.object({
   email: z.string().email(),

@@ -9,4 +9,5 @@ export const redirects = {
   afterResetPassword: "/",
   toVerify: "/verify-email",
   afterVerify: "/",
+  toSettings: "/account",
 } as const;
