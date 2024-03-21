@@ -3,7 +3,7 @@ import Link from "next/link";
 import { validateRequest } from "@/lib/auth";
 import { Icons } from "@/components/icons";
 import { getUserById } from "@/lib/api/user";
-import { redirects } from "@/lib/constants";
+import { APP_TITLE, redirects } from "@/lib/constants";
 import { UserDropdown } from "./user-dropdown";
 
 export async function Header() {
@@ -21,7 +21,8 @@ export async function Header() {
             className="flex items-center justify-center text-sm font-medium"
             href={redirects.afterLogin(user.username)}
           >
-            <Icons.logo className="h-5 w-5 shrink-0" />
+            <Icons.logo className="h-5 w-5 shrink-0 mr-2" />
+            {APP_TITLE}
           </Link>
 
           <Icons.slash className="w-4 text-muted shrink-0" />
