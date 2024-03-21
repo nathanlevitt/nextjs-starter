@@ -2,14 +2,16 @@ import Link from "next/link";
 
 import { validateRequest } from "@/lib/auth";
 import { Icons } from "@/components/icons";
-import { UserDropdown } from "./user-dropdown";
 import { getUserById } from "@/lib/api/user";
+import { redirects } from "@/lib/constants";
+import { UserDropdown } from "./user-dropdown";
 
 export async function Header() {
   const { user: authUser } = await validateRequest();
   if (!authUser) return null;
 
   const user = await getUserById(authUser.id);
+  if (!user) return null;
 
   return (
     <header className="sticky top-0 z-10 border-b bg-background/80 p-0">
@@ -17,7 +19,7 @@ export async function Header() {
         <div className="flex items-center space-x-3">
           <Link
             className="flex items-center justify-center text-sm font-medium"
-            href="/"
+            href={redirects.afterLogin(user.username)}
           >
             <Icons.logo className="h-5 w-5 shrink-0" />
           </Link>

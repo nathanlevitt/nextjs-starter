@@ -11,16 +11,14 @@ export async function getUserById(
   });
 }
 
-export async function updateUser(userId: User["id"], data: Partial<User>) {
-  // Username validation
-  if (data.username) {
-    const existingUser = await db.query.users.findFirst({
-      where: (table, { eq }) => eq(table.username, data.username!),
-    });
-    if (existingUser && existingUser.id !== userId) {
-      throw new Error("Username already taken.");
-    }
-  }
+export async function getUserByUsername(
+  username: User["username"]
+): Promise<User | undefined> {
+  return db.query.users.findFirst({
+    where: (table, { eq }) => eq(table.username, username),
+  });
+}
 
+export async function updateUser(userId: User["id"], data: Partial<User>) {
   return db.update(users).set(data).where(eq(users.id, userId));
 }
