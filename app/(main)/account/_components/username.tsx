@@ -41,8 +41,8 @@ export function Username({ user }: UsernameProps) {
         <CardContent className="pb-4">
           <div className="grid gap-2">
             <div className="flex">
-              <div className="flex h-full items-center justify-center text-sm text-muted-foreground bg-muted px-3 border border-r-0 rounded-md rounded-r-none">
-                {window.location.host}/
+              <div className="flex h-full items-center text-sm text-muted-foreground bg-muted px-3 border border-r-0 rounded-md rounded-r-none overflow-hidden sm:shrink-0">
+                <span className="truncate">{window.location.host}/</span>
               </div>
               <Input
                 id="username"
