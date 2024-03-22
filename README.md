@@ -1,14 +1,41 @@
 ## Nate's Next.js Starter
 
-This is my [Next.js](https://nextjs.org/) barebones boilerpate project that I use to start side projects 🚀
+A [Next.js](https://nextjs.org/) barebones starter project with everything you need to build a production-ready web app.
 
-- Next.js 14
-- Typescript
-- Tailwind CSS + shadcn/ui + Radix
-- MySQL
-- Drizzle
-- Email + Password Auth
-- React Email
+- 🚀 Next.js 14 & React 18
+- 🛠️ Typescript
+- 💅 Tailwind CSS + shadcn/ui + Radix
+- ✨ ESlint and Prettier
+- 🗄️ MySQL
+- 🌧️ Drizzle
+- 👤 Email + Password Auth
+- ✉️ React Email
+- 💯 Perfect Lighthouse score
+
+## 🚀 Getting started
+
+The easiest way to start with this template is using `create-next-app`.
+
+```
+npx create-next-app -e https://github.com/nathanlevitt/nextjs-starter
+```
+
+or
+
+```
+pnpm create next-app -e https://github.com/nathanlevitt/nextjs-starter
+```
+
+If you prefer, you can clone this repository and run the following commands to install packages and run the development server:
+
+1. Install packages: `pnpm install` (can also use `npm`, `yarn`, or `bun`)
+2. Start development server: `pnpm dev`
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+## First steps
+
+Create a `.env.local` file based on [lib/env.ts](lib/env.ts)
 
 <br />
 
@@ -18,20 +45,6 @@ This is my [Next.js](https://nextjs.org/) barebones boilerpate project that I us
 
 ![Nate's Next.js Starter dashboard page](public/screenshots/dashboard.png)
 
-## Getting Started
+## 📜 License
 
-First, create a `.env.local` file based on [lib/env.ts](lib/env.ts)
-
-Then, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+This project is licensed under the MIT License. For more information, see the [LICENSE](LICENSE) file.

@@ -1,7 +1,15 @@
 {
   "name": "nextjs-starter",
+  "description": "Next.js starter in TypeScript with everything you need to build a production-ready web app.",
   "version": "0.1.0",
   "private": true,
+  "author": "Nathan Levitt <nathan@trudine.com>",
+  "license": "MIT",
+  "keywords": [
+    "nextjs",
+    "starter",
+    "typescript"
+  ],
   "scripts": {
     "dev": "next dev",
     "build": "next build",
