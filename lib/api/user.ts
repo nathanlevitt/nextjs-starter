@@ -1,24 +1,26 @@
-import { eq } from "drizzle-orm";
-
 import { db } from "@/lib/db";
-import { User, users } from "@/lib/db/schema";
+import { UpdateUser, User } from "@/lib/db/schema";
 
 export async function getUserById(
   userId: User["id"]
 ): Promise<User | undefined> {
-  return db.query.users.findFirst({
-    where: (table, { eq }) => eq(table.id, userId),
-  });
+  return db
+    .selectFrom("users")
+    .selectAll()
+    .where("id", "=", userId)
+    .executeTakeFirst();
 }
 
 export async function getUserByUsername(
   username: User["username"]
 ): Promise<User | undefined> {
-  return db.query.users.findFirst({
-    where: (table, { eq }) => eq(table.username, username),
-  });
+  return db
+    .selectFrom("users")
+    .selectAll()
+    .where("username", "=", username)
+    .executeTakeFirst();
 }
 
-export async function updateUser(userId: User["id"], data: Partial<User>) {
-  return db.update(users).set(data).where(eq(users.id, userId));
+export async function updateUser(userId: User["id"], data: UpdateUser) {
+  return db.updateTable("users").set(data).where("id", "=", userId).execute();
 }
