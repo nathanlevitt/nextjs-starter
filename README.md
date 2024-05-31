@@ -6,7 +6,7 @@ A [Next.js](https://nextjs.org/) barebones starter project with everything you n
 - 🛠️ Typescript
 - 💅 Tailwind CSS + shadcn/ui + Radix
 - ✨ ESlint and Prettier
-- 🗄️ MySQL
+- 🗄️ PostgreSQL
 - 🌧️ Kysely
 - 👤 Email + Password Auth
 - ✉️ React Email
