@@ -1,7 +1,7 @@
 import { TimeSpan, createDate, isWithinExpirationDate } from "oslo";
 import { Cookie, CookieAttributes, CookieController } from "oslo/cookie";
 
-import { AuthSession, AuthUser, SessionId, UserId } from "@/lib/auth";
+import { AuthSession, AuthUser } from "@/lib/auth";
 import { generateId } from "@/lib/utils";
 import {
   deleteExpiredSessions,
@@ -12,6 +12,7 @@ import {
   setSession,
   updateSessionExpiration,
 } from "@/lib/api/auth";
+import { Session, User } from "@/lib/db/schema";
 
 interface SessionCookieOptions {
   name?: string;
@@ -59,7 +60,7 @@ export class Auth {
     );
   }
 
-  public async getUserSessions(userId: UserId): Promise<AuthSession[]> {
+  public async getUserSessions(userId: User["id"]): Promise<AuthSession[]> {
     const databaseSessions = await getUserSessions(userId);
     const sessions: AuthSession[] = [];
     for (const databaseSession of databaseSessions) {
@@ -77,7 +78,7 @@ export class Auth {
   }
 
   public async validateSession(
-    sessionId: SessionId
+    sessionId: Session["id"]
   ): Promise<
     { user: AuthUser; session: AuthSession } | { user: null; session: null }
   > {
@@ -120,7 +121,7 @@ export class Auth {
   }
 
   public async createSession(
-    userId: UserId,
+    userId: User["id"],
     options?: {
       sessionId?: string;
     }
@@ -141,11 +142,11 @@ export class Auth {
     return session;
   }
 
-  public async invalidateSession(sessionId: SessionId): Promise<void> {
+  public async invalidateSession(sessionId: Session["id"]): Promise<void> {
     await deleteSession(sessionId);
   }
 
-  public async invalidateUserSessions(userId: UserId): Promise<void> {
+  public async invalidateUserSessions(userId: User["id"]): Promise<void> {
     await deleteUserSessions(userId);
   }
 
@@ -169,7 +170,7 @@ export class Auth {
     return token ?? null;
   }
 
-  public createSessionCookie(sessionId: SessionId): Cookie {
+  public createSessionCookie(sessionId: Session["id"]): Cookie {
     return this.sessionCookieController.createCookie(sessionId);
   }
 
