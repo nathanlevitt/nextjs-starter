@@ -1,76 +1,49 @@
-import { relations } from "drizzle-orm";
 import {
-  mysqlTable,
-  serial,
-  varchar,
-  timestamp,
-  int,
-  boolean,
-  datetime,
-  index,
-} from "drizzle-orm/mysql-core";
+  Generated,
+  ColumnType,
+  Selectable,
+  Insertable,
+  Updateable,
+} from "kysely";
 
-export const users = mysqlTable(
-  "users",
-  {
-    id: serial("id").primaryKey(),
-    name: varchar("name", { length: 255 }),
-    email: varchar("email", { length: 255 }).unique().notNull(),
-    emailVerified: boolean("email_verified").default(false).notNull(),
-    username: varchar("username", { length: 255 }).unique().notNull(),
-    password: varchar("password", { length: 255 }).notNull(),
-    avatar: varchar("avatar", { length: 255 }),
-    createdAt: timestamp("created_at").defaultNow().notNull(),
-    updatedAt: timestamp("updated_at").onUpdateNow(),
-  },
-  (t) => ({
-    emailIdx: index("email_idx").on(t.email),
-  })
-);
+export interface BaseTable {
+  createdAt: ColumnType<Date, string | undefined, never>;
+  updatedAt: ColumnType<Date | null, string | undefined, never>;
+}
 
-export type User = typeof users.$inferSelect;
-export type NewUser = typeof users.$inferInsert;
+export interface UserTable extends BaseTable {
+  id: Generated<number>;
+  email: string;
+  username: string;
+  name: string | null;
+  password: string;
+  avatar: string | null;
+}
 
-export const usersRelations = relations(users, ({ many }) => ({
-  sessions: many(sessions),
-}));
+export type User = Selectable<UserTable>;
+export type NewUser = Insertable<UserTable>;
+export type UpdateUser = Updateable<UserTable>;
 
-export const sessions = mysqlTable("sessions", {
-  id: varchar("id", { length: 255 }).primaryKey(),
-  userId: int("user_id").notNull(),
-  expiresAt: datetime("expires_at").notNull(),
-});
+export interface SessionTable extends BaseTable {
+  id: Generated<string>;
+  userId: number;
+  expiresAt: Date;
+}
 
-export const sessionsRelations = relations(sessions, ({ one }) => ({
-  user: one(users, {
-    fields: [sessions.userId],
-    references: [users.id],
-  }),
-}));
+export type Session = Selectable<SessionTable>;
+export type NewSession = Insertable<SessionTable>;
 
-export const emailVerificationCodes = mysqlTable(
-  "email_verification_codes",
-  {
-    id: int("id").primaryKey().autoincrement(),
-    userId: int("user_id").unique().notNull(),
-    email: varchar("email", { length: 255 }).notNull(),
-    code: varchar("code", { length: 8 }).notNull(),
-    expiresAt: datetime("expires_at").notNull(),
-  },
-  (t) => ({
-    userIdx: index("user_idx").on(t.userId),
-    emailIdx: index("email_idx").on(t.email),
-  })
-);
+export interface PasswordResetTokenTable extends BaseTable {
+  id: Generated<string>;
+  userId: number;
+  expiresAt: Date;
+}
 
-export const passwordResetTokens = mysqlTable(
-  "password_reset_tokens",
-  {
-    id: varchar("id", { length: 40 }).primaryKey(),
-    userId: int("user_id").notNull(),
-    expiresAt: datetime("expires_at").notNull(),
-  },
-  (t) => ({
-    userIdx: index("user_idx").on(t.userId),
-  })
-);
+export type PasswordResetToken = Selectable<PasswordResetTokenTable>;
+export type NewPasswordResetToken = Insertable<PasswordResetTokenTable>;
+
+export interface Database {
+  users: UserTable;
+  sessions: SessionTable;
+  passwordResetTokens: PasswordResetTokenTable;
+}

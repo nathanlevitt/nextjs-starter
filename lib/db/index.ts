@@ -1,11 +1,5 @@
-import { drizzle } from "drizzle-orm/planetscale-serverless";
-import { connect } from "@planetscale/database";
-import * as schema from "./schema";
+import { createKysely } from "@vercel/postgres-kysely";
 
-const connection = connect({
-  host: process.env.DATABASE_HOST,
-  username: process.env.DATABASE_USERNAME,
-  password: process.env.DATABASE_PASSWORD,
-});
+import { Database } from "./schema";
 
-export const db = drizzle(connection, { schema });
+export const db = createKysely<Database>();

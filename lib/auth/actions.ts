@@ -3,14 +3,12 @@
 import bcrypt from "bcrypt";
 import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
-import { eq } from "drizzle-orm";
 import { z } from "zod";
 
 import { db } from "@/lib/db";
-import { env } from "@/lib/env";
 import { absoluteUrl } from "@/lib/utils";
 import { redirects } from "@/lib/constants";
-import { User, passwordResetTokens, users } from "@/lib/db/schema";
+import { User } from "@/lib/db/schema";
 import { auth, validateRequest } from "@/lib/auth";
 import {
   loginSchema,
@@ -39,9 +37,12 @@ export async function login(prevState: unknown, formData: FormData) {
   }
 
   const { email, password } = parsedData.data;
-  const existingUser = (
-    await db.select().from(users).where(eq(users.email, email))
-  )?.[0];
+  const existingUser = await db
+    .selectFrom("users")
+    .selectAll()
+    .where("email", "=", email)
+    .executeTakeFirst();
+
   if (!existingUser) {
     return { error: "Incorrect email or password." };
   }
@@ -80,19 +81,27 @@ export async function signup(prevState: unknown, formData: FormData) {
 
   let userId: User["id"];
   try {
-    const user = await db.insert(users).values({
-      email,
-      username,
-      password: hashedPassword,
-    });
-    userId = Number(user.insertId);
+    const user = await db
+      .insertInto("users")
+      .values({
+        email,
+        username,
+        password: hashedPassword,
+      })
+      .returning("id")
+      .executeTakeFirst();
+
+    if (!user) {
+      return { error: "Failed to create account, please try again." };
+    }
+
+    userId = user.id;
   } catch (error) {
     console.error(error);
     return { error: "An account with that email already exists." };
   }
 
   const session = await auth.createSession(userId, {});
-  console.log("Created session:", session);
   const sessionCookie = auth.createSessionCookie(session.id);
   cookies().set(
     sessionCookie.name,
@@ -135,20 +144,18 @@ export async function resetPassword(prevState: unknown, formData: FormData) {
 
   const { token, password } = parsedData.data;
 
-  const dbToken = await db.transaction(async (trx) => {
-    const prToken = await trx.query.passwordResetTokens.findFirst({
-      where: (table, { eq }) => eq(table.id, token),
-    });
+  const dbToken = await db
+    .selectFrom("passwordResetTokens")
+    .selectAll()
+    .where("id", "=", token)
+    .executeTakeFirst();
 
-    if (prToken) {
-      await trx
-        .delete(passwordResetTokens)
-        .where(eq(passwordResetTokens.id, token));
-    }
-
-    return prToken;
-  });
-  console.log({ dbToken });
+  if (dbToken) {
+    await db
+      .deleteFrom("passwordResetTokens")
+      .where("id", "=", token)
+      .executeTakeFirst();
+  }
 
   if (!dbToken) return { error: "Invalid password reset link." };
 
@@ -158,9 +165,10 @@ export async function resetPassword(prevState: unknown, formData: FormData) {
   await auth.invalidateUserSessions(dbToken.userId);
   const hashedPassword = await bcrypt.hash(password, 10);
   await db
-    .update(users)
+    .updateTable("users")
     .set({ password: hashedPassword })
-    .where(eq(users.id, dbToken.userId));
+    .where("id", "=", dbToken.userId)
+    .executeTakeFirst();
   const session = await auth.createSession(dbToken.userId, {});
   const sessionCookie = auth.createSessionCookie(session.id);
   cookies().set(
@@ -187,9 +195,11 @@ export async function sendPasswordResetLink(
       headers().get("x-forwarded-for") ||
       "0.0.0.0";
 
-    const user = await db.query.users.findFirst({
-      where: (table, { eq }) => eq(table.email, email.data),
-    });
+    const user = await db
+      .selectFrom("users")
+      .selectAll()
+      .where("email", "=", email.data)
+      .executeTakeFirst();
     console.log("User:", user);
 
     if (!user) {

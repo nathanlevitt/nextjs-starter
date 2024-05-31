@@ -1,15 +1,8 @@
 import { cache } from "react";
 import { cookies } from "next/headers";
-import { InferSelectModel } from "drizzle-orm";
-import { TimeSpan } from "oslo";
 
 import { Auth } from "@/lib/auth/core";
-import { sessions, users } from "@/lib/db/schema";
-
-export type User = InferSelectModel<typeof users>;
-export type Session = InferSelectModel<typeof sessions>;
-export type UserId = User["id"];
-export type SessionId = Session["id"];
+import { Session, User } from "@/lib/db/schema";
 
 export type AuthUser = Pick<User, "id" | "email" | "username" | "name">;
 export type AuthSession = Pick<Session, "id" | "userId" | "expiresAt"> & {

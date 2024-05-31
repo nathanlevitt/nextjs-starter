@@ -1,2 +1,0 @@
-ALTER TABLE `users` MODIFY COLUMN `createdAt` datetime NOT NULL DEFAULT '2024-02-10 01:12:51.142';--> statement-breakpoint
-ALTER TABLE `users` MODIFY COLUMN `updatedAt` datetime NOT NULL DEFAULT '2024-02-10 01:12:51.142';

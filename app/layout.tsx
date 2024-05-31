@@ -40,7 +40,7 @@ export default function RootLayout({
           <div vaul-drawer-wrapper="">
             <div className="relative flex flex-col min-h-screen bg-background">
               <main className="flex-1">{children}</main>
-              <Toaster />
+              <Toaster position="top-center" />
             </div>
           </div>
         </ThemeProvider>

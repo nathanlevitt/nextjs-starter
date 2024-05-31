@@ -7,7 +7,7 @@ A [Next.js](https://nextjs.org/) barebones starter project with everything you n
 - 💅 Tailwind CSS + shadcn/ui + Radix
 - ✨ ESlint and Prettier
 - 🗄️ MySQL
-- 🌧️ Drizzle
+- 🌧️ Kysely
 - 👤 Email + Password Auth
 - ✉️ React Email
 - 💯 Perfect Lighthouse score

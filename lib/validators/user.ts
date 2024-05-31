@@ -1,11 +1,11 @@
 import { z } from "zod";
-import { User } from "../db/schema";
+
+import { User } from "@/lib/db/schema";
 
 export const userSchema = z.object({
   id: z.number(),
   name: z.string().nullable(),
   email: z.string().email("Invalid email."),
-  emailVerified: z.boolean(),
   username: z
     .string()
     .trim()

@@ -1,92 +1,110 @@
-import { InferSelectModel, eq, lte } from "drizzle-orm";
-import { AuthSession, AuthUser, SessionId, UserId } from "@/lib/auth";
-import { db } from "@/lib/db";
-import { passwordResetTokens, sessions, users } from "@/lib/db/schema";
-import { generateId } from "@/lib/utils";
 import { TimeSpan, createDate } from "oslo";
+import { AuthSession, AuthUser } from "@/lib/auth";
+import { db } from "@/lib/db";
+import { generateId } from "@/lib/utils";
+import { Session, User } from "@/lib/db/schema";
 
 export type DatabaseUser = AuthUser;
 export type DatabaseSession = Omit<AuthSession, "fresh">;
 
-export async function deleteSession(sessionId: SessionId): Promise<void> {
-  await db.delete(sessions).where(eq(sessions.id, sessionId));
+export async function deleteSession(sessionId: Session["id"]): Promise<void> {
+  await db
+    .deleteFrom("sessions")
+    .where("id", "=", sessionId)
+    .executeTakeFirst();
 }
 
-export async function deleteUserSessions(userId: UserId): Promise<void> {
-  await db.delete(sessions).where(eq(sessions.userId, userId));
+export async function deleteUserSessions(userId: User["id"]): Promise<void> {
+  await db
+    .deleteFrom("sessions")
+    .where("userId", "=", userId)
+    .executeTakeFirst();
 }
 
 export async function getSessionAndUser(
-  sessionId: SessionId
+  sessionId: string
 ): Promise<[session: DatabaseSession | null, user: DatabaseUser | null]> {
-  const result = await db
-    .select({
-      user: users,
-      session: sessions,
-    })
-    .from(sessions)
-    .innerJoin(users, eq(sessions.userId, users.id))
-    .where(eq(sessions.id, sessionId));
-  if (!result[0]) return [null, null];
+  const session = await db
+    .selectFrom("sessions")
+    .where("id", "=", sessionId)
+    .selectAll()
+    .executeTakeFirst();
+  const user = await db
+    .selectFrom("users")
+    .innerJoin("sessions", "users.id", "sessions.userId")
+    .where("sessions.id", "=", sessionId)
+    .selectAll("users")
+    .executeTakeFirst();
+
+  if (!session || !user) return [null, null];
   return [
-    transformIntoDatabaseSession(result[0].session),
-    transformIntoDatabaseUser(result[0].user),
+    transformIntoDatabaseSession(session),
+    transformIntoDatabaseUser(user),
   ];
 }
 
 export async function getUserSessions(
-  userId: UserId
+  userId: number
 ): Promise<DatabaseSession[]> {
-  const result = await db
-    .select()
-    .from(sessions)
-    .where(eq(sessions.userId, userId));
-  return result.map((val) => {
+  const sessions = await db
+    .selectFrom("sessions")
+    .selectAll()
+    .where("userId", "=", userId)
+    .execute();
+
+  return sessions.map((val) => {
     return transformIntoDatabaseSession(val);
   });
 }
 
 export async function setSession(session: DatabaseSession): Promise<void> {
-  await db.insert(sessions).values({
-    id: session.id,
-    userId: session.userId,
-    expiresAt: session.expiresAt,
-  });
+  await db
+    .insertInto("sessions")
+    .values({
+      id: session.id,
+      userId: session.userId,
+      expiresAt: session.expiresAt,
+    })
+    .executeTakeFirst();
 }
 
 export async function updateSessionExpiration(
-  sessionId: SessionId,
+  sessionId: string,
   expiresAt: Date
 ): Promise<void> {
   await db
-    .update(sessions)
-    .set({
-      expiresAt,
-    })
-    .where(eq(sessions.id, sessionId));
+    .updateTable("sessions")
+    .set({ expiresAt })
+    .where("id", "=", sessionId)
+    .executeTakeFirst();
 }
 
 export async function deleteExpiredSessions(): Promise<void> {
-  await db.delete(sessions).where(lte(sessions.expiresAt, new Date()));
+  await db
+    .deleteFrom("sessions")
+    .where("expiresAt", "<=", new Date())
+    .executeTakeFirst();
 }
 
-export async function generateResetPasswordToken(userId: UserId) {
+export async function generateResetPasswordToken(userId: number) {
   await db
-    .delete(passwordResetTokens)
-    .where(eq(passwordResetTokens.userId, userId));
+    .deleteFrom("passwordResetTokens")
+    .where("userId", "=", userId)
+    .execute();
   const tokenId = await generateId(40);
   const expiresAt = createDate(new TimeSpan(2, "h"));
-  await db.insert(passwordResetTokens).values({
-    id: tokenId,
-    userId,
-    expiresAt,
-  });
+  await db
+    .insertInto("passwordResetTokens")
+    .values({
+      id: tokenId,
+      userId,
+      expiresAt,
+    })
+    .executeTakeFirstOrThrow();
   return tokenId;
 }
 
-function transformIntoDatabaseSession(
-  raw: InferSelectModel<typeof sessions>
-): DatabaseSession {
+function transformIntoDatabaseSession(raw: Session): DatabaseSession {
   const { id, userId, expiresAt } = raw;
   return {
     userId,
@@ -95,9 +113,7 @@ function transformIntoDatabaseSession(
   };
 }
 
-function transformIntoDatabaseUser(
-  raw: InferSelectModel<typeof users>
-): DatabaseUser {
+function transformIntoDatabaseUser(raw: User): DatabaseUser {
   const { id, email, username, name } = raw;
   return {
     id,
