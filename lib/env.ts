@@ -7,11 +7,14 @@ export const env = createEnv({
       .enum(["development", "test", "production"])
       .default("development"),
     VERCEL_URL: z.string().min(1),
-    DATABASE_URL: z.string().url(),
-    DATABASE_HOST: z.string(),
-    DATABASE_USERNAME: z.string(),
-    DATABASE_PASSWORD: z.string(),
-    DATABASE_NAME: z.string(),
+    POSTGRES_URL: z.string().min(1),
+    POSTGRES_PRISMA_URL: z.string().min(1),
+    POSTGRES_URL_NO_SSL: z.string().min(1),
+    POSTGRES_URL_NON_POOLING: z.string().min(1),
+    POSTGRES_USER: z.string().min(1),
+    POSTGRES_HOST: z.string().min(1),
+    POSTGRES_PASSWORD: z.string().min(1),
+    POSTGRES_DATABASE: z.string().min(1),
     SMTP_HOST: z.string().trim().min(1),
     SMTP_PORT: z.number().int().min(1),
     SMTP_USER: z.string().trim().min(1),
@@ -26,11 +29,14 @@ export const env = createEnv({
     // Server-side env vars
     NODE_ENV: process.env.NODE_ENV,
     VERCEL_URL: process.env.VERCEL_URL,
-    DATABASE_URL: process.env.DATABASE_URL,
-    DATABASE_HOST: process.env.DATABASE_HOST,
-    DATABASE_USERNAME: process.env.DATABASE_USERNAME,
-    DATABASE_PASSWORD: process.env.DATABASE_PASSWORD,
-    DATABASE_NAME: process.env.DATABASE_NAME,
+    POSTGRES_URL: process.env.POSTGRES_URL,
+    POSTGRES_PRISMA_URL: process.env.POSTGRES_PRISMA_URL,
+    POSTGRES_URL_NO_SSL: process.env.POSTGRES_URL_NO_SSL,
+    POSTGRES_URL_NON_POOLING: process.env.POSTGRES_URL_NON_POOLING,
+    POSTGRES_USER: process.env.POSTGRES_USER,
+    POSTGRES_HOST: process.env.POSTGRES_HOST,
+    POSTGRES_PASSWORD: process.env.POSTGRES_PASSWORD,
+    POSTGRES_DATABASE: process.env.POSTGRES_DATABASE,
     SMTP_HOST: process.env.SMTP_HOST,
     SMTP_PORT: parseInt(process.env.SMTP_PORT ?? ""),
     SMTP_USER: process.env.SMTP_USER,
@@ -41,27 +47,3 @@ export const env = createEnv({
 
   emptyStringAsUndefined: true,
 });
-
-// import { z } from "zod";
-
-// const envVariables = z.object({
-//   NODE_ENV: z
-//     .enum(["development", "test", "production"])
-//     .default("development"),
-//   JWT_SECRET_KEY: z.string().min(1),
-//   JWT_REFRESH_SECRET_KEY: z.string().min(1),
-//   DATABASE_URL: z.string().min(1),
-//   DATABASE_HOST: z.string().min(1),
-//   DATABASE_USERNAME: z.string().min(1),
-//   DATABASE_PASSWORD: z.string().min(1),
-//   DATABASE_NAME: z.string().min(1),
-// });
-
-// // Validate that the environment variables are set
-// envVariables.parse(process.env);
-
-// declare global {
-//   namespace NodeJS {
-//     interface ProcessEnv extends z.infer<typeof envVariables> {}
-//   }
-// }
