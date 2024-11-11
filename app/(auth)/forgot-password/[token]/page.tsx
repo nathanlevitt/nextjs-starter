@@ -7,11 +7,12 @@ import { ResetPassword } from "./reset-password";
 export default async function ResetPasswordPage({
   params,
 }: {
-  params: { token: string };
+  params: Promise<{ token: string }>;
 }) {
+  const { token } = await params;
   const { user } = await validateRequest();
 
   if (user) redirect(redirects.afterLogin(user.username));
 
-  return <ResetPassword token={params.token} />;
+  return <ResetPassword token={token} />;
 }

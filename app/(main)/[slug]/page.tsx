@@ -5,12 +5,13 @@ import { redirects } from "@/lib/constants";
 export default async function SlugPage({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
+  const { slug } = await params;
   const { user } = await validateRequest();
   if (!user) redirect(redirects.toLogin);
 
-  if (user.username !== params.slug) return notFound();
+  if (user.username !== slug) return notFound();
 
-  return <p className="text-sm font-medium">{params.slug} dashboard</p>;
+  return <p className="text-sm font-medium">{slug} dashboard</p>;
 }
