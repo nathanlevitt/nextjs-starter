@@ -214,7 +214,7 @@ export async function sendPasswordResetLink(
     const mail = await sendMail({
       to: user.email,
       subject: "Reset your password",
-      body: renderResetPasswordEmail({
+      body: await renderResetPasswordEmail({
         username: user.username,
         link: verificationLink,
         ipAddress,
