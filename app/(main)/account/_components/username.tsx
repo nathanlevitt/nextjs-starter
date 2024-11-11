@@ -11,7 +11,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { User } from "@/lib/db/schema";
 import { updateUsername } from "../actions";
-import { useFormState } from "react-dom";
+import { useActionState } from "react";
 import { SubmitButton } from "@/components/submit-button";
 import { APP_TITLE } from "@/lib/constants";
 
@@ -24,7 +24,7 @@ interface UsernameProps {
 }
 
 export function Username({ user }: UsernameProps) {
-  const [state, formAction] = useFormState(
+  const [state, formAction] = useActionState(
     updateUsername.bind(null, user.id),
     initialState
   );

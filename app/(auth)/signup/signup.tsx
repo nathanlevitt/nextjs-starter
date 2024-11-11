@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useFormState } from "react-dom";
+import { useActionState } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { SubmitButton } from "@/components/submit-button";
@@ -12,7 +12,7 @@ const initialState = {
 };
 
 export function Signup() {
-  const [state, formAction] = useFormState(signup, initialState);
+  const [state, formAction] = useActionState(signup, initialState);
 
   return (
     <div className="space-y-4">
