@@ -54,7 +54,7 @@ export async function login(prevState: unknown, formData: FormData) {
 
   const session = await auth.createSession(existingUser.id, {});
   const sessionCookie = auth.createSessionCookie(session.id);
-  cookies().set(
+  (await cookies()).set(
     sessionCookie.name,
     sessionCookie.value,
     sessionCookie.attributes
@@ -103,7 +103,7 @@ export async function signup(prevState: unknown, formData: FormData) {
 
   const session = await auth.createSession(userId, {});
   const sessionCookie = auth.createSessionCookie(session.id);
-  cookies().set(
+  (await cookies()).set(
     sessionCookie.name,
     sessionCookie.value,
     sessionCookie.attributes
@@ -121,7 +121,7 @@ export async function logout() {
 
   await auth.invalidateSession(session.id);
   const sessionCookie = auth.createBlankSessionCookie();
-  cookies().set(
+  (await cookies()).set(
     sessionCookie.name,
     sessionCookie.value,
     sessionCookie.attributes
@@ -171,7 +171,7 @@ export async function resetPassword(prevState: unknown, formData: FormData) {
     .executeTakeFirst();
   const session = await auth.createSession(dbToken.userId, {});
   const sessionCookie = auth.createSessionCookie(session.id);
-  cookies().set(
+  (await cookies()).set(
     sessionCookie.name,
     sessionCookie.value,
     sessionCookie.attributes
@@ -191,8 +191,8 @@ export async function sendPasswordResetLink(
 
   try {
     const ipAddress =
-      headers().get("x-real-ip") ||
-      headers().get("x-forwarded-for") ||
+      (await headers()).get("x-real-ip") ||
+      (await headers()).get("x-forwarded-for") ||
       "0.0.0.0";
 
     const user = await db
