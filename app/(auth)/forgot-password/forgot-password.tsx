@@ -8,8 +8,7 @@ import { redirects } from "@/lib/constants";
 import { AlertTriangle, CheckCircle } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import { useFormState } from "react-dom";
+import { useActionState, useEffect } from "react";
 import { toast } from "sonner";
 
 const initialState = {
@@ -18,7 +17,10 @@ const initialState = {
 };
 
 export function ForgotPassword() {
-  const [state, formAction] = useFormState(sendPasswordResetLink, initialState);
+  const [state, formAction] = useActionState(
+    sendPasswordResetLink,
+    initialState
+  );
   const router = useRouter();
 
   useEffect(() => {

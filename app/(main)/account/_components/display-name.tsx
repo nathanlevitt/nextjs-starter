@@ -11,7 +11,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { User } from "@/lib/db/schema";
 import { updateDisplayName } from "../actions";
-import { useFormState } from "react-dom";
+import { useActionState } from "react";
 import { SubmitButton } from "@/components/submit-button";
 
 const initialState = {
@@ -23,7 +23,7 @@ interface DisplayNameProps {
 }
 
 export function DisplayName({ user }: DisplayNameProps) {
-  const [state, formAction] = useFormState(
+  const [state, formAction] = useActionState(
     updateDisplayName.bind(null, user.id),
     initialState
   );

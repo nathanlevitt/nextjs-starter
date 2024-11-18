@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
-import { useFormState } from "react-dom";
+import { useActionState, useEffect } from "react";
 import { toast } from "sonner";
 import { AlertTriangle } from "lucide-react";
 
@@ -19,7 +18,7 @@ interface ResetPasswordProps {
 }
 
 export function ResetPassword({ token }: ResetPasswordProps) {
-  const [state, formAction] = useFormState(resetPassword, initialState);
+  const [state, formAction] = useActionState(resetPassword, initialState);
 
   useEffect(() => {
     if (state.error) {
