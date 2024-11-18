@@ -28,7 +28,7 @@ export default function RootLayout({
       <body
         className={cn(
           "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable
+          fontSans.variable,
         )}
       >
         <ThemeProvider
@@ -38,7 +38,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <div vaul-drawer-wrapper="">
-            <div className="relative flex flex-col min-h-screen bg-background">
+            <div className="relative flex min-h-screen flex-col bg-background">
               <main className="flex-1">{children}</main>
               <Toaster position="top-center" />
             </div>

@@ -21,11 +21,11 @@ export async function Header() {
             className="flex items-center justify-center text-sm font-medium"
             href={redirects.afterLogin(user.username)}
           >
-            <Icons.logo className="h-5 w-5 shrink-0 mr-2" />
+            <Icons.logo className="mr-2 h-5 w-5 shrink-0" />
             {APP_TITLE}
           </Link>
 
-          <Icons.slash className="w-4 text-muted shrink-0" />
+          <Icons.slash className="w-4 shrink-0 text-muted" />
         </div>
 
         <div className="ml-auto flex items-center space-x-4">

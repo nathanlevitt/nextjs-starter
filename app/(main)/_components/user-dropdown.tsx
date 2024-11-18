@@ -66,7 +66,7 @@ export function UserDropdown({ user }: UserDropdownProps) {
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
           <button
-            className="w-full h-full"
+            className="h-full w-full"
             onClick={() => {
               logout();
             }}

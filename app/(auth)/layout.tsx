@@ -6,7 +6,7 @@ export default function AuthLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="mx-auto max-w-[350px] min-h-screen p-4 space-y-6">
+    <div className="mx-auto min-h-screen max-w-[350px] space-y-6 p-4">
       <Icons.logo className="mx-auto mt-8" />
       {children}
     </div>

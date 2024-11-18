@@ -5,7 +5,7 @@ import { useFormStatus } from "react-dom";
 import { Button } from "@/components/ui/button";
 
 export function SubmitButton(
-  props: React.ComponentPropsWithoutRef<typeof Button>
+  props: React.ComponentPropsWithoutRef<typeof Button>,
 ) {
   const { pending } = useFormStatus();
 

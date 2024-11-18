@@ -9,7 +9,7 @@ export default async function NotFound() {
   if (!user) return redirect(redirects.toLogin);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center max-w-5xl space-y-6 py-10 mx-auto text-center md:py-12">
+    <div className="mx-auto flex min-h-screen max-w-5xl flex-col items-center justify-center space-y-6 py-10 text-center md:py-12">
       <h1 className="text-4xl font-bold">404</h1>
       <p>
         You are logged in as <span className="font-bold">{user.username}</span>{" "}

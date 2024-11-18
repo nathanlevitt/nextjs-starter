@@ -56,13 +56,13 @@ export function Login() {
         </form>
 
         {state.error && (
-          <div className="text-sm font-medium text-center text-destructive">
+          <div className="text-center text-sm font-medium text-destructive">
             {state.error}
           </div>
         )}
       </div>
 
-      <p className="px-8 text-sm text-center text-muted-foreground">
+      <p className="px-8 text-center text-sm text-muted-foreground">
         By clicking continue, you agree to our{" "}
         <Link
           className="underline underline-offset-4 hover:text-primary"

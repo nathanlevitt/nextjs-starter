@@ -19,7 +19,7 @@ const initialState = {
 export function ForgotPassword() {
   const [state, formAction] = useActionState(
     sendPasswordResetLink,
-    initialState
+    initialState,
   );
   const router = useRouter();
 
@@ -59,13 +59,13 @@ export function ForgotPassword() {
         </form>
 
         {state.error && (
-          <div className="text-sm font-medium text-center text-destructive">
+          <div className="text-center text-sm font-medium text-destructive">
             {state.error}
           </div>
         )}
       </div>
 
-      <p className="px-8 text-sm text-center text-muted-foreground">
+      <p className="px-8 text-center text-sm text-muted-foreground">
         Don&apos;t have an account?{" "}
         <Link
           className="font-medium underline-offset-4 hover:text-primary hover:underline"

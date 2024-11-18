@@ -58,7 +58,7 @@ export function ResetPassword({ token }: ResetPasswordProps) {
         </form>
 
         {state.error && (
-          <div className="text-sm font-medium text-center text-destructive">
+          <div className="text-center text-sm font-medium text-destructive">
             {state.error}
           </div>
         )}

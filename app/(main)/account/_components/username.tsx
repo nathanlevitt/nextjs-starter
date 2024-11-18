@@ -26,7 +26,7 @@ interface UsernameProps {
 export function Username({ user }: UsernameProps) {
   const [state, formAction] = useActionState(
     updateUsername.bind(null, user.id),
-    initialState
+    initialState,
   );
 
   return (
@@ -41,13 +41,13 @@ export function Username({ user }: UsernameProps) {
         <CardContent className="pb-4">
           <div className="grid gap-2">
             <div className="flex">
-              <div className="flex h-full items-center text-sm text-muted-foreground bg-muted px-3 border border-r-0 rounded-md rounded-r-none overflow-hidden sm:shrink-0">
+              <div className="flex h-full items-center overflow-hidden rounded-md rounded-r-none border border-r-0 bg-muted px-3 text-sm text-muted-foreground sm:shrink-0">
                 <span className="truncate">{window.location.host}/</span>
               </div>
               <Input
                 id="username"
                 name="username"
-                className="border-l-0 rounded-l-none"
+                className="rounded-l-none border-l-0"
                 defaultValue={user.username || ""}
               />
             </div>

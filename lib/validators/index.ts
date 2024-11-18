@@ -12,7 +12,7 @@ export type ZodSafeParse<T> =
 
 export function parseFormData<T>(
   formData: FormData,
-  schema: z.Schema<T>
+  schema: z.Schema<T>,
 ): ZodSafeParse<T> {
   const raw = Object.fromEntries(formData.entries());
   const parsedData = schema.safeParse(raw);

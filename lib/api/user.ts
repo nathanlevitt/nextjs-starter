@@ -2,7 +2,7 @@ import { db } from "@/lib/db";
 import { UpdateUser, User } from "@/lib/db/schema";
 
 export async function getUserById(
-  userId: User["id"]
+  userId: User["id"],
 ): Promise<User | undefined> {
   return db
     .selectFrom("users")
@@ -12,7 +12,7 @@ export async function getUserById(
 }
 
 export async function getUserByUsername(
-  username: User["username"]
+  username: User["username"],
 ): Promise<User | undefined> {
   return db
     .selectFrom("users")

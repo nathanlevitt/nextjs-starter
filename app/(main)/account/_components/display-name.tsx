@@ -25,7 +25,7 @@ interface DisplayNameProps {
 export function DisplayName({ user }: DisplayNameProps) {
   const [state, formAction] = useActionState(
     updateDisplayName.bind(null, user.id),
-    initialState
+    initialState,
   );
 
   return (

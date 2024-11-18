@@ -12,7 +12,7 @@ const ERROR = {
 export async function updateDisplayName(
   userId: User["id"],
   prevState: unknown,
-  formData: FormData
+  formData: FormData,
 ) {
   const parsedData = parseFormData(formData, userSchema.pick({ name: true }));
   if (!parsedData.success) {
@@ -31,11 +31,11 @@ export async function updateDisplayName(
 export async function updateUsername(
   userId: User["id"],
   prevState: unknown,
-  formData: FormData
+  formData: FormData,
 ) {
   const parsedData = parseFormData(
     formData,
-    userSchema.pick({ username: true })
+    userSchema.pick({ username: true }),
   );
   if (!parsedData.success) {
     return { error: parsedData.error };

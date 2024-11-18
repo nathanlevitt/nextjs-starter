@@ -8,7 +8,7 @@ export default async function Home() {
   if (user) redirect(redirects.afterLogin(user.username));
 
   return (
-    <section className="grid flex-col items-center justify-center max-w-5xl gap-4 py-10 mx-auto text-center md:py-12">
+    <section className="mx-auto grid max-w-5xl flex-col items-center justify-center gap-4 py-10 text-center md:py-12">
       <p className="text-sm font-medium">Landing page</p>
     </section>
   );

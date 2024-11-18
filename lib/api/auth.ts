@@ -22,7 +22,7 @@ export async function deleteUserSessions(userId: User["id"]): Promise<void> {
 }
 
 export async function getSessionAndUser(
-  sessionId: string
+  sessionId: string,
 ): Promise<[session: DatabaseSession | null, user: DatabaseUser | null]> {
   const session = await db
     .selectFrom("sessions")
@@ -44,7 +44,7 @@ export async function getSessionAndUser(
 }
 
 export async function getUserSessions(
-  userId: number
+  userId: number,
 ): Promise<DatabaseSession[]> {
   const sessions = await db
     .selectFrom("sessions")
@@ -70,7 +70,7 @@ export async function setSession(session: DatabaseSession): Promise<void> {
 
 export async function updateSessionExpiration(
   sessionId: string,
-  expiresAt: Date
+  expiresAt: Date,
 ): Promise<void> {
   await db
     .updateTable("sessions")

@@ -40,7 +40,7 @@ export const validateRequest = cache(
         (await cookies()).set(
           sessionCookie.name,
           sessionCookie.value,
-          sessionCookie.attributes
+          sessionCookie.attributes,
         );
       }
       if (!result.session) {
@@ -48,12 +48,12 @@ export const validateRequest = cache(
         (await cookies()).set(
           sessionCookie.name,
           sessionCookie.value,
-          sessionCookie.attributes
+          sessionCookie.attributes,
         );
       }
     } catch {
       // Next.js throws when you attempt to set cookie when rendering page
     }
     return result;
-  }
+  },
 );

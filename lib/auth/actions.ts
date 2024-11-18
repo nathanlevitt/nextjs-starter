@@ -57,7 +57,7 @@ export async function login(prevState: unknown, formData: FormData) {
   (await cookies()).set(
     sessionCookie.name,
     sessionCookie.value,
-    sessionCookie.attributes
+    sessionCookie.attributes,
   );
   return redirect(redirects.afterLogin(existingUser.username));
 }
@@ -106,7 +106,7 @@ export async function signup(prevState: unknown, formData: FormData) {
   (await cookies()).set(
     sessionCookie.name,
     sessionCookie.value,
-    sessionCookie.attributes
+    sessionCookie.attributes,
   );
   return redirect(redirects.afterLogin(username));
 }
@@ -125,7 +125,7 @@ export async function logout() {
   (await cookies()).set(
     sessionCookie.name,
     sessionCookie.value,
-    sessionCookie.attributes
+    sessionCookie.attributes,
   );
   return redirect(redirects.afterLogout);
 }
@@ -175,14 +175,14 @@ export async function resetPassword(prevState: unknown, formData: FormData) {
   (await cookies()).set(
     sessionCookie.name,
     sessionCookie.value,
-    sessionCookie.attributes
+    sessionCookie.attributes,
   );
   redirect(redirects.afterResetPassword);
 }
 
 export async function sendPasswordResetLink(
   prevState: unknown,
-  formData: FormData
+  formData: FormData,
 ): Promise<{ success?: boolean; error?: string }> {
   const raw = formData.get("email");
   const email = z.string().trim().email().safeParse(raw);
@@ -209,7 +209,7 @@ export async function sendPasswordResetLink(
 
     const verificationToken = await generateResetPasswordToken(user.id);
     const verificationLink = absoluteUrl(
-      `/forgot-password/${verificationToken}`
+      `/forgot-password/${verificationToken}`,
     );
 
     const mail = await sendMail({
