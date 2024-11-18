@@ -114,9 +114,10 @@ export async function signup(prevState: unknown, formData: FormData) {
 export async function logout() {
   const { session } = await validateRequest();
   if (!session) {
-    return {
-      error: "No session found.",
-    };
+    return;
+    // return {
+    //   error: "No session found.",
+    // };
   }
 
   await auth.invalidateSession(session.id);
