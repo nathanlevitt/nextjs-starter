@@ -1,10 +1,18 @@
+import { redirect } from "next/navigation";
 import { Icons } from "@/components/icons";
+import { getUser } from "@/lib/queries";
 
-export default function AuthLayout({
+export default async function AuthLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const user = await getUser();
+
+  if (user) {
+    redirect("/");
+  }
+
   return (
     <div className="mx-auto min-h-screen max-w-[350px] space-y-6 p-4">
       <Icons.logo className="mx-auto mt-8" />

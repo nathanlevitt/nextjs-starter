@@ -2,21 +2,20 @@
 
 import { cookies, headers } from "next/headers";
 import { z } from "zod";
+import { isWithinExpirationDate } from "oslo";
 
 import { db } from "@/lib/db";
 import { absoluteUrl } from "@/lib/utils";
-
 import { sendMail } from "@/lib/email/send-email";
 import { renderResetPasswordEmail } from "@/lib/email/templates/reset-password";
-import { isWithinExpirationDate } from "oslo";
-import { validatedAction } from "../middleware";
+import { validatedAction } from "@/lib/middleware";
 import {
   createResetPasswordToken,
   deleteSession,
   hashPassword,
   setSession,
   verifyPassword,
-} from "../session";
+} from "@/lib/session";
 
 const loginSchema = z.object({
   email: z.string().email("Please enter a valid email.").toLowerCase(),

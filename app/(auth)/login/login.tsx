@@ -4,15 +4,16 @@ import Link from "next/link";
 import { useActionState } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { SubmitButton } from "@/components/submit-button";
-import { login } from "@/lib/auth/actions";
+import { ActionState } from "@/lib/middleware";
+import { Button } from "@/components/ui/button";
 
-const initialState = {
-  error: "",
-};
+import { login } from "../actions";
 
 export function Login() {
-  const [state, formAction] = useActionState(login, initialState);
+  const [state, formAction, pending] = useActionState<ActionState, FormData>(
+    login,
+    { error: "" },
+  );
 
   return (
     <div className="space-y-4">
@@ -52,10 +53,12 @@ export function Login() {
             <Input type="password" id="password" name="password" />
           </div>
 
-          <SubmitButton>Sign in</SubmitButton>
+          <Button type="submit" disabled={pending}>
+            Sign in
+          </Button>
         </form>
 
-        {state.error && (
+        {state?.error && (
           <div className="text-center text-sm font-medium text-destructive">
             {state.error}
           </div>

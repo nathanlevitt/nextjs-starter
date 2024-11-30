@@ -4,29 +4,30 @@ import { useActionState, useEffect } from "react";
 import { toast } from "sonner";
 import { AlertTriangle } from "lucide-react";
 
-import { SubmitButton } from "@/components/submit-button";
+import { ActionState } from "@/lib/middleware";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { resetPassword } from "@/lib/auth/actions";
 
-const initialState = {
-  error: "",
-};
+import { resetPassword } from "../../actions";
 
 interface ResetPasswordProps {
   token: string;
 }
 
 export function ResetPassword({ token }: ResetPasswordProps) {
-  const [state, formAction] = useActionState(resetPassword, initialState);
+  const [state, formAction, pending] = useActionState<ActionState, FormData>(
+    resetPassword,
+    { error: "" },
+  );
 
   useEffect(() => {
-    if (state.error) {
+    if (state?.error) {
       toast(state.error, {
         icon: <AlertTriangle className="h-4 w-4 text-destructive" />,
       });
     }
-  }, [state.error]);
+  }, [state?.error]);
 
   return (
     <div className="space-y-4">
@@ -54,10 +55,12 @@ export function ResetPassword({ token }: ResetPasswordProps) {
             />
           </div>
 
-          <SubmitButton>Reset Password</SubmitButton>
+          <Button type="submit" disabled={pending}>
+            Reset password
+          </Button>
         </form>
 
-        {state.error && (
+        {state?.error && (
           <div className="text-center text-sm font-medium text-destructive">
             {state.error}
           </div>
