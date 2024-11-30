@@ -2,7 +2,7 @@
 
 A [Next.js](https://nextjs.org/) barebones starter project with everything you need to build a production-ready web app.
 
-- 🚀 Next.js 14 & React 18
+- 🚀 Next.js 15 & React 19
 - 🛠️ Typescript
 - 💅 Tailwind CSS + shadcn/ui + Radix
 - ✨ ESlint and Prettier
