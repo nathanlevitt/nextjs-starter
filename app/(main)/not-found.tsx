@@ -2,13 +2,14 @@ import { redirect } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import { getUser } from "@/lib/queries";
+import { links } from "@/lib/constants";
 import { logout } from "../(auth)/actions";
 
 export default async function NotFound() {
   const user = await getUser();
 
   if (!user) {
-    return redirect("/login");
+    return redirect(links.login);
   }
 
   return (

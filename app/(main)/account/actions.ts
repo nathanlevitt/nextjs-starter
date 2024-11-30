@@ -6,6 +6,7 @@ import { z } from "zod";
 import { db } from "@/lib/db";
 import { validatedAction } from "@/lib/middleware";
 import { getUser } from "@/lib/queries";
+import { links } from "@/lib/constants";
 
 const updateDisplayNameSchema = z.object({
   name: z
@@ -40,7 +41,7 @@ export const updateDisplayName = validatedAction(
       };
     }
 
-    expirePath("/account");
+    expirePath(links.account);
   },
 );
 
@@ -90,6 +91,6 @@ export const updateUsername = validatedAction(
       };
     }
 
-    expirePath("/account");
+    expirePath(links.account);
   },
 );

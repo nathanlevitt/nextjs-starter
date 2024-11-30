@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { Icons } from "@/components/icons";
 import { getUser } from "@/lib/queries";
+import { links } from "@/lib/constants";
 
 export default async function AuthLayout({
   children,
@@ -10,7 +11,7 @@ export default async function AuthLayout({
   const user = await getUser();
 
   if (user) {
-    redirect("/");
+    redirect(links.home);
   }
 
   return (

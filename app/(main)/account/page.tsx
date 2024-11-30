@@ -1,17 +1,19 @@
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+
 import { Separator } from "@/components/ui/separator";
 import { getUser } from "@/lib/queries";
+import { links } from "@/lib/constants";
 
 import { DisplayName } from "./_components/display-name";
 import { Username } from "./_components/username";
-import { headers } from "next/headers";
 
 export default async function AccountSettingsPage() {
   const hostname = (await headers()).get("x-forwarded-host") || "";
   const user = await getUser();
 
   if (!user) {
-    return redirect("/login");
+    return redirect(links.login);
   }
 
   return (

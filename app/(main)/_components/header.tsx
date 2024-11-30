@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import Link from "next/link";
 
 import { Icons } from "@/components/icons";
-import { APP_TITLE } from "@/lib/constants";
+import { APP_TITLE, links } from "@/lib/constants";
 import { Skeleton } from "@/components/ui/skeleton";
 
 import { Auth } from "./auth";
@@ -14,7 +14,7 @@ export async function Header() {
         <div className="flex items-center space-x-3">
           <Link
             className="flex items-center justify-center text-sm font-medium"
-            href="/"
+            href={links.home}
           >
             <Icons.logo className="mr-2 h-5 w-5 shrink-0" />
             {APP_TITLE}

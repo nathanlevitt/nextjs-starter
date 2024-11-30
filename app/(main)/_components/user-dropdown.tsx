@@ -15,7 +15,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { User } from "@/lib/db/schema";
-import { redirects } from "@/lib/constants";
+import { links } from "@/lib/constants";
 import { logout } from "@/app/(auth)/actions";
 
 interface UserDropdownProps {
@@ -59,7 +59,7 @@ export function UserDropdown({ user }: UserDropdownProps) {
             Billing
             <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
           </DropdownMenuItem>
-          <Link href={redirects.toSettings}>
+          <Link href={links.account}>
             <DropdownMenuItem>Settings</DropdownMenuItem>
           </Link>
           <DropdownMenuItem>New Team</DropdownMenuItem>

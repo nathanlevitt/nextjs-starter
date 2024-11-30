@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ActionState } from "@/lib/middleware";
+import { links } from "@/lib/constants";
 
 import { sendPasswordResetLink } from "../actions";
 
@@ -25,7 +26,7 @@ export function ForgotPassword() {
       toast("Password reset link sent!", {
         icon: <CheckCircle className="h-4 w-4" />,
       });
-      router.push("/login");
+      router.push(links.login);
     }
     if (state?.error) {
       toast(state.error, {
@@ -68,7 +69,7 @@ export function ForgotPassword() {
         Don&apos;t have an account?{" "}
         <Link
           className="font-medium underline-offset-4 hover:text-primary hover:underline"
-          href="/signup"
+          href={links.signup}
         >
           Sign up
         </Link>

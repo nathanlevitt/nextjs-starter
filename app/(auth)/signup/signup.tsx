@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { ActionState } from "@/lib/middleware";
 import { Button } from "@/components/ui/button";
+import { links } from "@/lib/constants";
 
 import { signup } from "../actions";
 
@@ -25,7 +26,7 @@ export function Signup() {
           Already have an account?{" "}
           <Link
             className="font-medium underline-offset-4 hover:text-primary hover:underline"
-            href="/login"
+            href={links.login}
           >
             Log in
           </Link>
