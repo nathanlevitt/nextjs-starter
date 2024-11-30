@@ -1,41 +1,39 @@
 "use client";
 
-import { SubmitButton } from "@/components/submit-button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { sendPasswordResetLink } from "@/lib/auth/actions";
-import { redirects } from "@/lib/constants";
-import { AlertTriangle, CheckCircle } from "lucide-react";
+import { useActionState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useActionState, useEffect } from "react";
+import { AlertTriangle, CheckCircle } from "lucide-react";
 import { toast } from "sonner";
 
-const initialState = {
-  error: "",
-  success: false,
-};
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { ActionState } from "@/lib/middleware";
+import { links } from "@/lib/constants";
+
+import { sendPasswordResetLink } from "../actions";
 
 export function ForgotPassword() {
-  const [state, formAction] = useActionState(
+  const [state, formAction, pending] = useActionState<ActionState, FormData>(
     sendPasswordResetLink,
-    initialState,
+    { error: "" },
   );
   const router = useRouter();
 
   useEffect(() => {
-    if (state.success) {
+    if (state?.success) {
       toast("Password reset link sent!", {
         icon: <CheckCircle className="h-4 w-4" />,
       });
-      router.push(redirects.toLogin);
+      router.push(links.login);
     }
-    if (state.error) {
+    if (state?.error) {
       toast(state.error, {
         icon: <AlertTriangle className="h-4 w-4 text-destructive" />,
       });
     }
-  }, [router, state.error, state.success]);
+  }, [router, state?.error, state?.success]);
 
   return (
     <div className="space-y-4">
@@ -55,10 +53,12 @@ export function ForgotPassword() {
             <Input type="email" id="email" name="email" />
           </div>
 
-          <SubmitButton>Reset Password</SubmitButton>
+          <Button type="submit" disabled={pending}>
+            Reset password
+          </Button>
         </form>
 
-        {state.error && (
+        {state?.error && (
           <div className="text-center text-sm font-medium text-destructive">
             {state.error}
           </div>
@@ -69,7 +69,7 @@ export function ForgotPassword() {
         Don&apos;t have an account?{" "}
         <Link
           className="font-medium underline-offset-4 hover:text-primary hover:underline"
-          href="/signup"
+          href={links.signup}
         >
           Sign up
         </Link>

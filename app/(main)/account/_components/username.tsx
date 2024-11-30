@@ -1,5 +1,7 @@
 "use client";
 
+import { useActionState } from "react";
+
 import {
   Card,
   CardContent,
@@ -11,22 +13,19 @@ import {
 import { Input } from "@/components/ui/input";
 import { User } from "@/lib/db/schema";
 import { updateUsername } from "../actions";
-import { useActionState } from "react";
-import { SubmitButton } from "@/components/submit-button";
 import { APP_TITLE } from "@/lib/constants";
-
-const initialState = {
-  error: "",
-};
+import { Button } from "@/components/ui/button";
+import { ActionState } from "@/lib/middleware";
 
 interface UsernameProps {
+  baseUrl: string;
   user: User;
 }
 
-export function Username({ user }: UsernameProps) {
-  const [state, formAction] = useActionState(
-    updateUsername.bind(null, user.id),
-    initialState,
+export function Username({ baseUrl, user }: UsernameProps) {
+  const [state, formAction, pending] = useActionState<ActionState, FormData>(
+    updateUsername,
+    { error: "" },
   );
 
   return (
@@ -42,7 +41,7 @@ export function Username({ user }: UsernameProps) {
           <div className="grid gap-2">
             <div className="flex">
               <div className="flex h-full items-center overflow-hidden rounded-md rounded-r-none border border-r-0 bg-muted px-3 text-sm text-muted-foreground sm:shrink-0">
-                <span className="truncate">{window.location.host}/</span>
+                <span className="truncate">{baseUrl}/</span>
               </div>
               <Input
                 id="username"
@@ -52,7 +51,7 @@ export function Username({ user }: UsernameProps) {
               />
             </div>
 
-            {state.error && (
+            {state?.error && (
               <div className="text-sm font-medium text-destructive">
                 {state.error}
               </div>
@@ -63,7 +62,9 @@ export function Username({ user }: UsernameProps) {
           <p className="text-sm text-muted-foreground">
             Please use 48 characters at maximum.
           </p>
-          <SubmitButton type="submit">Save</SubmitButton>
+          <Button type="submit" disabled={pending}>
+            Save
+          </Button>
         </CardFooter>
       </Card>
     </form>

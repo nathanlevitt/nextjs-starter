@@ -1,56 +1,96 @@
 "use server";
 
-import { getUserByUsername, updateUser } from "@/lib/api/user";
-import { User } from "@/lib/db/schema";
-import { parseFormData } from "@/lib/validators";
-import { userSchema } from "@/lib/validators/user";
+import { expirePath } from "next/cache";
+import { z } from "zod";
 
-const ERROR = {
-  default: "An error occurred, please try again.",
-};
+import { db } from "@/lib/db";
+import { validatedAction } from "@/lib/middleware";
+import { getUser } from "@/lib/queries";
+import { links } from "@/lib/constants";
 
-export async function updateDisplayName(
-  userId: User["id"],
-  prevState: unknown,
-  formData: FormData,
-) {
-  const parsedData = parseFormData(formData, userSchema.pick({ name: true }));
-  if (!parsedData.success) {
-    return { error: parsedData.error };
-  }
+const updateDisplayNameSchema = z.object({
+  name: z
+    .string()
+    .min(1, "Display name must be at least 1 character.")
+    .max(32, "Display name must be less than 32 characters."),
+});
 
-  try {
-    await updateUser(userId, parsedData.data);
-    return { error: "" };
-  } catch (error) {
-    console.error(error);
-    return { error: ERROR.default };
-  }
-}
+export const updateDisplayName = validatedAction(
+  updateDisplayNameSchema,
+  async (data) => {
+    const { name } = data;
 
-export async function updateUsername(
-  userId: User["id"],
-  prevState: unknown,
-  formData: FormData,
-) {
-  const parsedData = parseFormData(
-    formData,
-    userSchema.pick({ username: true }),
-  );
-  if (!parsedData.success) {
-    return { error: parsedData.error };
-  }
+    const user = await getUser();
 
-  try {
-    const existingUser = await getUserByUsername(parsedData.data.username);
-    if (existingUser && existingUser.id !== userId) {
-      return { error: "Username is already taken." };
+    if (!user) {
+      return {
+        error: "User not authenticated.",
+      };
     }
 
-    await updateUser(userId, parsedData.data);
-    return { error: "" };
-  } catch (error) {
-    console.error(error);
-    return { error: ERROR.default };
-  }
-}
+    try {
+      await db
+        .updateTable("users")
+        .set({ name })
+        .where("id", "=", user.id)
+        .execute();
+    } catch (error) {
+      console.error(error);
+      return {
+        error: "An error occurred. Please try again.",
+      };
+    }
+
+    expirePath(links.account);
+  },
+);
+
+const updateUsernameSchema = z.object({
+  username: z
+    .string()
+    .min(1, "Username must be at least 1 character.")
+    .max(48, "Username must be less than 48 characters.")
+    .toLowerCase(),
+});
+
+export const updateUsername = validatedAction(
+  updateUsernameSchema,
+  async (data) => {
+    const { username } = data;
+
+    const user = await getUser();
+
+    if (!user) {
+      return {
+        error: "User not authenticated.",
+      };
+    }
+
+    try {
+      const existingUser = await db
+        .selectFrom("users")
+        .selectAll()
+        .where("username", "=", username)
+        .executeTakeFirst();
+
+      if (existingUser && existingUser.id !== user.id) {
+        return {
+          error: "Username is already taken.",
+        };
+      }
+
+      await db
+        .updateTable("users")
+        .set({ username })
+        .where("id", "=", user.id)
+        .execute();
+    } catch (error) {
+      console.error(error);
+      return {
+        error: "An error occurred. Please try again.",
+      };
+    }
+
+    expirePath(links.account);
+  },
+);

@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,9 +15,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { User } from "@/lib/db/schema";
-import { logout } from "@/lib/auth/actions";
-import { redirects } from "@/lib/constants";
-import Link from "next/link";
+import { links } from "@/lib/constants";
+import { logout } from "@/app/(auth)/actions";
 
 interface UserDropdownProps {
   user: User;
@@ -32,8 +33,8 @@ export function UserDropdown({ user }: UserDropdownProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-          <Avatar className="h-8 w-8">
+        <Button variant="ghost" className="relative h-9 w-9 rounded-full">
+          <Avatar className="h-9 w-9">
             <AvatarImage src={user.avatar ?? undefined} alt={name} />
             <AvatarFallback>{initials}</AvatarFallback>
           </Avatar>
@@ -58,7 +59,7 @@ export function UserDropdown({ user }: UserDropdownProps) {
             Billing
             <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
           </DropdownMenuItem>
-          <Link href={redirects.toSettings}>
+          <Link href={links.account}>
             <DropdownMenuItem>Settings</DropdownMenuItem>
           </Link>
           <DropdownMenuItem>New Team</DropdownMenuItem>

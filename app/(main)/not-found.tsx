@@ -1,12 +1,16 @@
 import { redirect } from "next/navigation";
-import { validateRequest } from "@/lib/auth";
-import { redirects } from "@/lib/constants";
+
 import { Button } from "@/components/ui/button";
-import { logout } from "@/lib/auth/actions";
+import { getUser } from "@/lib/queries";
+import { links } from "@/lib/constants";
+import { logout } from "../(auth)/actions";
 
 export default async function NotFound() {
-  const { user } = await validateRequest();
-  if (!user) return redirect(redirects.toLogin);
+  const user = await getUser();
+
+  if (!user) {
+    return redirect(links.login);
+  }
 
   return (
     <div className="mx-auto flex min-h-screen max-w-5xl flex-col items-center justify-center space-y-6 py-10 text-center md:py-12">
