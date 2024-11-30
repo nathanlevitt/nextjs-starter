@@ -24,7 +24,7 @@ export async function Header() {
         </div>
 
         <div className="ml-auto flex items-center space-x-4">
-          <Suspense fallback={<Skeleton className="h-8 w-8 rounded-full" />}>
+          <Suspense fallback={<Skeleton className="h-9 w-9 rounded-full" />}>
             <Auth />
           </Suspense>
         </div>
