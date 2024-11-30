@@ -47,14 +47,6 @@ export async function createSession(user: { id: number }) {
 }
 
 export async function setSession(user: { id: number }) {
-  (await cookies()).set("test", "test", {
-    httpOnly: true,
-    secure: true,
-    sameSite: "lax",
-    path: "/",
-    // expires: Date.now() + getExpiresAt().milliseconds(),
-  });
-
   const session = await createSession(user);
   console.log(session);
 

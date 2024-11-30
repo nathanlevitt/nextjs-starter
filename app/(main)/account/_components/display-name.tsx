@@ -1,5 +1,7 @@
 "use client";
 
+import { useActionState } from "react";
+
 import {
   Card,
   CardContent,
@@ -11,21 +13,17 @@ import {
 import { Input } from "@/components/ui/input";
 import { User } from "@/lib/db/schema";
 import { updateDisplayName } from "../actions";
-import { useActionState } from "react";
-import { SubmitButton } from "@/components/submit-button";
-
-const initialState = {
-  error: "",
-};
+import { ActionState } from "@/lib/middleware";
+import { Button } from "@/components/ui/button";
 
 interface DisplayNameProps {
   user: User;
 }
 
 export function DisplayName({ user }: DisplayNameProps) {
-  const [state, formAction] = useActionState(
-    updateDisplayName.bind(null, user.id),
-    initialState,
+  const [state, formAction, pending] = useActionState<ActionState, FormData>(
+    updateDisplayName,
+    { error: "" },
   );
 
   return (
@@ -43,7 +41,7 @@ export function DisplayName({ user }: DisplayNameProps) {
               <Input id="name" name="name" defaultValue={user.name || ""} />
             </div>
 
-            {state.error && (
+            {state?.error && (
               <div className="text-sm font-medium text-destructive">
                 {state.error}
               </div>
@@ -54,7 +52,9 @@ export function DisplayName({ user }: DisplayNameProps) {
           <p className="text-sm text-muted-foreground">
             Please use 32 characters at maximum.
           </p>
-          <SubmitButton type="submit">Save</SubmitButton>
+          <Button type="submit" disabled={pending}>
+            Save
+          </Button>
         </CardFooter>
       </Card>
     </form>

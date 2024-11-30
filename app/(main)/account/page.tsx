@@ -1,17 +1,18 @@
 import { redirect } from "next/navigation";
-import { validateRequest } from "@/lib/auth";
-import { redirects } from "@/lib/constants";
 import { Separator } from "@/components/ui/separator";
-import { getUserById } from "@/lib/api/user";
+import { getUser } from "@/lib/queries";
+
 import { DisplayName } from "./_components/display-name";
 import { Username } from "./_components/username";
+import { headers } from "next/headers";
 
 export default async function AccountSettingsPage() {
-  const { user: authUser } = await validateRequest();
-  if (!authUser) redirect(redirects.toLogin);
+  const hostname = (await headers()).get("x-forwarded-host") || "";
+  const user = await getUser();
 
-  const user = await getUserById(authUser.id);
-  if (!user) redirect(redirects.toLogin);
+  if (!user) {
+    return redirect("/login");
+  }
 
   return (
     <section className="grid gap-6">
@@ -25,7 +26,7 @@ export default async function AccountSettingsPage() {
       <Separator />
 
       <DisplayName user={user} />
-      <Username user={user} />
+      <Username user={user} baseUrl={hostname} />
     </section>
   );
 }

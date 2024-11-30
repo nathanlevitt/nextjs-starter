@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,9 +15,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { User } from "@/lib/db/schema";
-import { logout } from "@/lib/auth/actions";
 import { redirects } from "@/lib/constants";
-import Link from "next/link";
+import { logout } from "@/app/(auth)/actions";
 
 interface UserDropdownProps {
   user: User;
