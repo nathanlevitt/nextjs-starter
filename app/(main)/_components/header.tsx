@@ -19,8 +19,6 @@ export async function Header() {
             <Icons.logo className="mr-2 h-5 w-5 shrink-0" />
             {APP_TITLE}
           </Link>
-
-          {/* <Icons.slash className="w-4 shrink-0 text-muted" /> */}
         </div>
 
         <div className="ml-auto flex items-center space-x-4">
