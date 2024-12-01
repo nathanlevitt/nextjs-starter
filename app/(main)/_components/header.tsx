@@ -20,7 +20,7 @@ export async function Header() {
             {APP_TITLE}
           </Link>
 
-          <Icons.slash className="w-4 shrink-0 text-muted" />
+          {/* <Icons.slash className="w-4 shrink-0 text-muted" /> */}
         </div>
 
         <div className="ml-auto flex items-center space-x-4">

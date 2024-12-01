@@ -20,7 +20,7 @@ export async function Auth() {
         <Button variant="link">Log in</Button>
       </Link>
 
-      <Link href={links.signup}>
+      <Link href={links.signup} className="hidden sm:block">
         <Button variant="default">
           Get started
           <Icons.arrowRight className="ml-1 h-4 w-4" />
