@@ -4,12 +4,18 @@ import { twMerge } from "tailwind-merge";
 import { promisify } from "util";
 import { randomBytes } from "crypto";
 
+import { UserRole } from "./db/schema";
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
 export function isDev() {
   return env.NODE_ENV === "development";
+}
+
+export function isAdmin(role: UserRole) {
+  return role === "admin";
 }
 
 export async function generateId(length: number = 16) {

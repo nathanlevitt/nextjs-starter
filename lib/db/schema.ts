@@ -11,6 +11,8 @@ export interface BaseTable {
   updatedAt: ColumnType<Date | null, string | undefined, never>;
 }
 
+export type UserRole = "admin" | "manager" | "support" | "customer";
+
 export interface UserTable extends BaseTable {
   id: Generated<number>;
   email: string;
@@ -18,6 +20,7 @@ export interface UserTable extends BaseTable {
   name: string | null;
   password: string;
   avatar: string | null;
+  role: UserRole;
 }
 
 export type User = Selectable<UserTable>;
