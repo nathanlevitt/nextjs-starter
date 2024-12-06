@@ -20,7 +20,7 @@ export interface UserTable extends BaseTable {
   name: string | null;
   password: string;
   avatar: string | null;
-  role: UserRole;
+  role: ColumnType<UserRole, UserRole | undefined, UserRole | undefined>;
 }
 
 export type User = Selectable<UserTable>;
