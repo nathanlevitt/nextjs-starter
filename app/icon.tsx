@@ -1,7 +1,6 @@
 import { ImageResponse } from "next/og";
 
-// Route segment config
-export const runtime = "edge";
+import { Icons } from "@/components/icons";
 
 // Image metadata
 export const size = {
@@ -16,13 +15,13 @@ export default function Icon() {
     (
       // ImageResponse JSX element
       <div
-        tw="flex items-center justify-center bg-black text-[24px] leading-8 text-white"
+        tw="flex items-center justify-center bg-white text-black rounded-lg"
         style={{
-          width: 32,
-          height: 32,
+          width: size.width,
+          height: size.height,
         }}
       >
-        N
+        <Icons.logo fill="currentColor" width="90%" height="90%" />
       </div>
     ),
     // ImageResponse options
