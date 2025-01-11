@@ -1,4 +1,6 @@
 -- UserTable schema
+CREATE TYPE user_role AS ENUM ("admin", "manager", "support", "customer");
+
 CREATE TABLE users (
   "id" SERIAL PRIMARY KEY,
   "email" VARCHAR(255) NOT NULL,
@@ -6,6 +8,7 @@ CREATE TABLE users (
   "name" VARCHAR(255),
   "password" VARCHAR(255) NOT NULL,
   "avatar" VARCHAR(255),
+  "role" user_role DEFAULT "customer" NOT NULL,
   "createdAt" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   "updatedAt" TIMESTAMP DEFAULT NULL
 );
