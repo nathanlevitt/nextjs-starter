@@ -1,6 +1,6 @@
 "use server";
 
-import { expirePath } from "next/cache";
+import { unstable_expirePath as expirePath } from "next/cache";
 import { z } from "zod";
 
 import { db } from "@/lib/db";
