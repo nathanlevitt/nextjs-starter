@@ -33,7 +33,7 @@ export interface SessionsTable extends BaseTable {
   userId: string;
   ipAddress: string | null;
   userAgent: string | null;
-  expiresAt: ColumnType<Date, string, never>;
+  expiresAt: ColumnType<Date, Date, Date>;
 }
 
 export type Session = Selectable<SessionsTable>;
@@ -51,10 +51,10 @@ export interface SecurityTokensTable extends Pick<BaseTable, "createdAt"> {
   token: string;
   type: ColumnType<
     SecurityTokenType,
-    SecurityTokenType | undefined,
+    SecurityTokenType,
     SecurityTokenType | undefined
   >;
-  expiresAt: ColumnType<Date, string, never>;
+  expiresAt: ColumnType<Date, Date, never>;
 }
 
 export type SecurityToken = Selectable<SecurityTokensTable>;

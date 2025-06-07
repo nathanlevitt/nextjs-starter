@@ -9,7 +9,7 @@ export async function getUser() {
   }
 
   const session = await verifySession(sessionCookie.value);
-  if (!session || !session.user || typeof session.user.id !== "number") {
+  if (!session || !session.user || typeof session.user.id !== "string") {
     return null;
   }
 

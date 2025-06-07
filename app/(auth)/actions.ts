@@ -10,9 +10,10 @@ import { sendMail } from "@/lib/email/send-email";
 import { renderResetPasswordEmail } from "@/lib/email/templates/reset-password";
 import { validatedAction } from "@/lib/middleware";
 import {
-  createResetPasswordToken,
+  createSecurityToken,
   deleteSession,
   hashPassword,
+  parseHeaders,
   setSession,
   verifyPassword,
 } from "@/lib/session";
@@ -24,8 +25,8 @@ const loginSchema = z.object({
 
 export const login = validatedAction(loginSchema, async (data) => {
   const { email, password } = data;
-  const ip = (await headers()).get("x-real-ip") || "localhost";
-  console.log(`Login attempt from ${ip} with email ${email}.`);
+  const { ipAddress } = await parseHeaders();
+  console.log(`Login attempt from ${ipAddress} with email ${email}.`);
 
   const user = await db
     .selectFrom("users")
@@ -150,7 +151,7 @@ export const sendPasswordResetLink = validatedAction(
       };
     }
 
-    const token = await createResetPasswordToken(user.id);
+    const token = await createSecurityToken({ id: user.id }, "password_reset");
     const link = absoluteUrl(`/forgot-password/${token}`);
 
     await sendMail({
@@ -180,9 +181,9 @@ export const resetPassword = validatedAction(
     console.log(`Password reset attempt from ${ip} with token ${token}.`);
 
     const dbToken = await db
-      .selectFrom("passwordResetTokens")
+      .selectFrom("securityTokens")
       .selectAll()
-      .where("id", "=", token)
+      .where("token", "=", token)
       .executeTakeFirst();
 
     if (!dbToken) {
@@ -197,10 +198,7 @@ export const resetPassword = validatedAction(
       };
     }
 
-    await db
-      .deleteFrom("passwordResetTokens")
-      .where("id", "=", token)
-      .execute();
+    await db.deleteFrom("securityTokens").where("token", "=", token).execute();
     await db
       .deleteFrom("sessions")
       .where("userId", "=", dbToken.userId)
