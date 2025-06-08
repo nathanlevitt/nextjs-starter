@@ -13,8 +13,8 @@ export interface BaseTable {
 
 export type UserRole = "admin" | "manager" | "support" | "customer";
 
-export interface UserTable extends BaseTable {
-  id: Generated<number>;
+export interface UsersTable extends BaseTable {
+  id: Generated<string>;
   email: string;
   username: string;
   name: string | null;
@@ -23,30 +23,45 @@ export interface UserTable extends BaseTable {
   role: ColumnType<UserRole, UserRole | undefined, UserRole | undefined>;
 }
 
-export type User = Selectable<UserTable>;
-export type NewUser = Insertable<UserTable>;
-export type UpdateUser = Updateable<UserTable>;
+export type User = Selectable<UsersTable>;
+export type NewUser = Insertable<UsersTable>;
+export type UpdateUser = Updateable<UsersTable>;
 
-export interface SessionTable extends BaseTable {
+export interface SessionsTable extends BaseTable {
   id: Generated<string>;
-  userId: number;
-  expiresAt: Date;
+  token: string;
+  userId: string;
+  ipAddress: string | null;
+  userAgent: string | null;
+  expiresAt: ColumnType<Date, Date, Date>;
 }
 
-export type Session = Selectable<SessionTable>;
-export type NewSession = Insertable<SessionTable>;
+export type Session = Selectable<SessionsTable>;
+export type NewSession = Insertable<SessionsTable>;
+export type UpdateSession = Updateable<SessionsTable>;
 
-export interface PasswordResetTokenTable extends BaseTable {
+export type SecurityTokenType =
+  | "email_verification"
+  | "password_reset"
+  | "two_factor_authentication";
+
+export interface SecurityTokensTable extends Pick<BaseTable, "createdAt"> {
   id: Generated<string>;
-  userId: number;
-  expiresAt: Date;
+  userId: string;
+  token: string;
+  type: ColumnType<
+    SecurityTokenType,
+    SecurityTokenType,
+    SecurityTokenType | undefined
+  >;
+  expiresAt: ColumnType<Date, Date, never>;
 }
 
-export type PasswordResetToken = Selectable<PasswordResetTokenTable>;
-export type NewPasswordResetToken = Insertable<PasswordResetTokenTable>;
+export type SecurityToken = Selectable<SecurityTokensTable>;
+export type NewSecurityToken = Insertable<SecurityTokensTable>;
 
 export interface Database {
-  users: UserTable;
-  sessions: SessionTable;
-  passwordResetTokens: PasswordResetTokenTable;
+  users: UsersTable;
+  sessions: SessionsTable;
+  securityTokens: SecurityTokensTable;
 }

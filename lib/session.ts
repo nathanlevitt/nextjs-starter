@@ -1,16 +1,25 @@
 import { compare, hash } from "bcrypt";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { createDate, isWithinExpirationDate, TimeSpan } from "oslo";
 import { generateId } from "./utils";
 import { db } from "./db";
+import { SecurityTokenType } from "./db/schema";
 
 const SALT_ROUNDS = 10;
 
 type SessionData = {
   id: string;
-  user: { id: number };
+  token: string;
+  user: { id: string };
   expiresAt: Date;
 };
+
+export async function parseHeaders() {
+  const { get } = await headers();
+  const ipAddress = get("x-real-ip") || "localhost";
+  const userAgent = get("user-agent") || "unknown";
+  return { ipAddress, userAgent };
+}
 
 export async function hashPassword(password: string) {
   return hash(password, SALT_ROUNDS);
@@ -24,35 +33,41 @@ export function getExpiresAt() {
   return new TimeSpan(30, "d");
 }
 
-export async function createSession(user: { id: number }) {
-  const sessionId = await generateId(40);
+export async function createSession(user: { id: string }) {
+  const token = await generateId(40);
+  const { ipAddress, userAgent } = await parseHeaders();
   const expiresAt = createDate(getExpiresAt());
 
+  const { id } = await db
+    .insertInto("sessions")
+    .values({
+      token,
+      userId: user.id,
+      ipAddress,
+      userAgent,
+      expiresAt,
+    })
+    .returning("id")
+    .executeTakeFirstOrThrow();
+
   const session: SessionData = {
-    id: sessionId,
+    id,
+    token,
     user: { id: user.id },
     expiresAt,
   };
-
-  await db
-    .insertInto("sessions")
-    .values({
-      id: session.id,
-      userId: session.user.id,
-      expiresAt,
-    })
-    .executeTakeFirst();
+  console.log("Session created:", session);
 
   return session;
 }
 
-export async function setSession(user: { id: number }) {
+export async function setSession(user: { id: string }) {
+  const isSecure = process.env.NODE_ENV === "production";
   const session = await createSession(user);
-  console.log(session);
 
-  (await cookies()).set("session", session.id, {
+  (await cookies()).set("session", session.token, {
     httpOnly: true,
-    secure: true,
+    secure: isSecure,
     sameSite: "lax",
     path: "/",
     expires: Date.now() + getExpiresAt().milliseconds(),
@@ -61,22 +76,22 @@ export async function setSession(user: { id: number }) {
   return session;
 }
 
-export async function deleteSession(sessionId: string) {
+export async function deleteSession(token: string) {
   return db
     .deleteFrom("sessions")
-    .where("id", "=", sessionId)
+    .where("token", "=", token)
     .executeTakeFirst();
 }
 
-export async function verifySession(sessionId: string) {
+export async function verifySession(token: string) {
   const session = await db
     .selectFrom("sessions")
     .selectAll()
-    .where("id", "=", sessionId)
+    .where("token", "=", token)
     .executeTakeFirst();
 
   if (!session || !isWithinExpirationDate(session.expiresAt)) {
-    await deleteSession(sessionId);
+    await deleteSession(token);
     return null;
   }
 
@@ -89,31 +104,39 @@ export async function verifySession(sessionId: string) {
     await db
       .updateTable("sessions")
       .set({ expiresAt: session.expiresAt })
-      .where("id", "=", sessionId)
+      .where("token", "=", token)
       .executeTakeFirst();
   }
 
   return {
     id: session.id,
+    token: session.token,
     user: { id: session.userId },
     expiresAt: session.expiresAt,
   } satisfies SessionData;
 }
 
-export async function createResetPasswordToken(userId: number) {
+export async function createSecurityToken(
+  user: { id: string },
+  type: SecurityTokenType,
+) {
   await db
-    .deleteFrom("passwordResetTokens")
-    .where("userId", "=", userId)
+    .deleteFrom("securityTokens")
+    .where("userId", "=", user.id)
+    .where("type", "=", type)
     .execute();
-  const tokenId = await generateId(40);
-  const expiresAt = createDate(new TimeSpan(2, "h"));
+
+  const token = await generateId(40);
+  const expiresAt = createDate(new TimeSpan(1, "h"));
+
   await db
-    .insertInto("passwordResetTokens")
+    .insertInto("securityTokens")
     .values({
-      id: tokenId,
-      userId,
+      userId: user.id,
+      token,
+      type,
       expiresAt,
     })
     .executeTakeFirstOrThrow();
-  return tokenId;
+  return token;
 }

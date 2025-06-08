@@ -10,9 +10,10 @@ import { sendMail } from "@/lib/email/send-email";
 import { renderResetPasswordEmail } from "@/lib/email/templates/reset-password";
 import { validatedAction } from "@/lib/middleware";
 import {
-  createResetPasswordToken,
+  createSecurityToken,
   deleteSession,
   hashPassword,
+  parseHeaders,
   setSession,
   verifyPassword,
 } from "@/lib/session";
@@ -24,8 +25,8 @@ const loginSchema = z.object({
 
 export const login = validatedAction(loginSchema, async (data) => {
   const { email, password } = data;
-  const ip = (await headers()).get("x-real-ip") || "localhost";
-  console.log(`Login attempt from ${ip} with email ${email}.`);
+  const { ipAddress } = await parseHeaders();
+  console.log(`Login attempt from ${ipAddress} with email ${email}.`);
 
   const user = await db
     .selectFrom("users")
@@ -36,6 +37,7 @@ export const login = validatedAction(loginSchema, async (data) => {
   if (!user) {
     return {
       error: "Invalid email or password. Please try again.",
+      values: data,
     };
   }
 
@@ -44,6 +46,7 @@ export const login = validatedAction(loginSchema, async (data) => {
   if (!isValidPassword) {
     return {
       error: "Invalid email or password. Please try again.",
+      values: data,
     };
   }
 
@@ -76,6 +79,7 @@ export const signup = validatedAction(signupSchema, async (data) => {
   if (existingEmail) {
     return {
       error: "An account with that email already exists. Please try again.",
+      values: data,
     };
   }
 
@@ -88,6 +92,7 @@ export const signup = validatedAction(signupSchema, async (data) => {
   if (existingUsername) {
     return {
       error: "An account with that username already exists. Please try again.",
+      values: data,
     };
   }
 
@@ -105,6 +110,7 @@ export const signup = validatedAction(signupSchema, async (data) => {
   if (!user) {
     return {
       error: "Failed to create account. Please try again.",
+      values: data,
     };
   }
 
@@ -147,10 +153,11 @@ export const sendPasswordResetLink = validatedAction(
     if (!user) {
       return {
         error: "An account with that email does not exist.",
+        values: data,
       };
     }
 
-    const token = await createResetPasswordToken(user.id);
+    const token = await createSecurityToken({ id: user.id }, "password_reset");
     const link = absoluteUrl(`/forgot-password/${token}`);
 
     await sendMail({
@@ -180,27 +187,26 @@ export const resetPassword = validatedAction(
     console.log(`Password reset attempt from ${ip} with token ${token}.`);
 
     const dbToken = await db
-      .selectFrom("passwordResetTokens")
+      .selectFrom("securityTokens")
       .selectAll()
-      .where("id", "=", token)
+      .where("token", "=", token)
       .executeTakeFirst();
 
     if (!dbToken) {
       return {
         error: "Invalid password reset link.",
+        values: data,
       };
     }
 
     if (!isWithinExpirationDate(dbToken.expiresAt)) {
       return {
         error: "Password reset link expired.",
+        values: data,
       };
     }
 
-    await db
-      .deleteFrom("passwordResetTokens")
-      .where("id", "=", token)
-      .execute();
+    await db.deleteFrom("securityTokens").where("token", "=", token).execute();
     await db
       .deleteFrom("sessions")
       .where("userId", "=", dbToken.userId)

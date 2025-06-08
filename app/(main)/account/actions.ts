@@ -25,6 +25,7 @@ export const updateDisplayName = validatedAction(
     if (!user) {
       return {
         error: "User not authenticated.",
+        values: data,
       };
     }
 
@@ -38,10 +39,13 @@ export const updateDisplayName = validatedAction(
       console.error(error);
       return {
         error: "An error occurred. Please try again.",
+        values: data,
       };
     }
 
     expirePath(links.account);
+
+    return { success: true };
   },
 );
 
@@ -63,6 +67,7 @@ export const updateUsername = validatedAction(
     if (!user) {
       return {
         error: "User not authenticated.",
+        values: data,
       };
     }
 
@@ -76,6 +81,7 @@ export const updateUsername = validatedAction(
       if (existingUser && existingUser.id !== user.id) {
         return {
           error: "Username is already taken.",
+          values: data,
         };
       }
 
@@ -88,9 +94,12 @@ export const updateUsername = validatedAction(
       console.error(error);
       return {
         error: "An error occurred. Please try again.",
+        values: data,
       };
     }
 
     expirePath(links.account);
+
+    return { success: true };
   },
 );

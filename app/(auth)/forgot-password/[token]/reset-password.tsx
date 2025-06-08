@@ -51,6 +51,7 @@ export function ResetPassword({ token }: ResetPasswordProps) {
               id="password"
               name="password"
               autoComplete="new-password"
+              defaultValue={state.values?.password}
               required
             />
           </div>

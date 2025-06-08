@@ -35,7 +35,12 @@ export function Login() {
         <form className="grid gap-4" action={formAction}>
           <div className="grid gap-2.5">
             <Label htmlFor="email">Email</Label>
-            <Input type="email" id="email" name="email" />
+            <Input
+              type="email"
+              id="email"
+              name="email"
+              defaultValue={state.values?.email}
+            />
           </div>
 
           <div className="grid gap-2.5">
@@ -51,7 +56,12 @@ export function Login() {
                 Forgot password?
               </Link>
             </Label>
-            <Input type="password" id="password" name="password" />
+            <Input
+              type="password"
+              id="password"
+              name="password"
+              defaultValue={state.values?.password}
+            />
           </div>
 
           <Button type="submit" disabled={pending}>

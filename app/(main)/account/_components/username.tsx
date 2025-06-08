@@ -1,6 +1,8 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
+import { AlertTriangle, CheckCircle } from "lucide-react";
+import { toast } from "sonner";
 
 import {
   Card,
@@ -28,6 +30,21 @@ export function Username({ baseUrl, user }: UsernameProps) {
     { error: "" },
   );
 
+  useEffect(() => {
+    if (state?.success) {
+      console.log("Username updated successfully:", state.success);
+      toast("Username updated successfully!", {
+        icon: <CheckCircle className="h-4 w-4" />,
+      });
+    }
+    if (state?.error) {
+      console.error("Error updating username:", state.error);
+      toast(state.error, {
+        icon: <AlertTriangle className="h-4 w-4 text-destructive" />,
+      });
+    }
+  }, [state?.error, state?.success]);
+
   return (
     <form action={formAction}>
       <Card>
@@ -47,7 +64,7 @@ export function Username({ baseUrl, user }: UsernameProps) {
                 id="username"
                 name="username"
                 className="rounded-l-none border-l-0"
-                defaultValue={user.username || ""}
+                defaultValue={state.values?.username || user.username || ""}
               />
             </div>
 
