@@ -75,6 +75,7 @@ export function ForgotPassword() {
         <Link
           className="font-medium underline-offset-4 hover:text-primary hover:underline"
           href={links.signup}
+          prefetch
         >
           Sign up
         </Link>

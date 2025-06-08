@@ -27,6 +27,7 @@ export function Signup() {
           <Link
             className="font-medium underline-offset-4 hover:text-primary hover:underline"
             href={links.login}
+            prefetch
           >
             Log in
           </Link>
@@ -82,6 +83,7 @@ export function Signup() {
         <Link
           className="underline underline-offset-4 hover:text-primary"
           href="/terms"
+          prefetch
         >
           Terms of Service
         </Link>{" "}
@@ -89,6 +91,7 @@ export function Signup() {
         <Link
           className="underline underline-offset-4 hover:text-primary"
           href="/privacy"
+          prefetch
         >
           Privacy Policy
         </Link>

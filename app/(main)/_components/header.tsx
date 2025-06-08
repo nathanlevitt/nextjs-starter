@@ -15,6 +15,7 @@ export async function Header() {
           <Link
             className="flex items-center justify-center text-sm font-medium"
             href={links.home}
+            prefetch
           >
             <Icons.logo className="mr-2 h-5 w-5 shrink-0" />
             {APP_TITLE}

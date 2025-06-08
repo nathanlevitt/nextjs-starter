@@ -16,11 +16,11 @@ export async function Auth() {
 
   return (
     <>
-      <Link href={links.login}>
+      <Link href={links.login} prefetch>
         <Button variant="link">Log in</Button>
       </Link>
 
-      <Link href={links.signup} className="hidden sm:block">
+      <Link href={links.signup} className="hidden sm:block" prefetch>
         <Button variant="default">
           Get started
           <Icons.arrowRight className="ml-1 h-4 w-4" />

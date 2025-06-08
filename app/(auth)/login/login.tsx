@@ -25,6 +25,7 @@ export function Login() {
           <Link
             className="font-medium underline-offset-4 hover:text-primary hover:underline"
             href={links.signup}
+            prefetch
           >
             Sign up
           </Link>
@@ -52,6 +53,7 @@ export function Login() {
               <Link
                 href="/forgot-password"
                 className="text-xs leading-none text-primary underline-offset-4 hover:underline"
+                prefetch
               >
                 Forgot password?
               </Link>
@@ -81,6 +83,7 @@ export function Login() {
         <Link
           className="underline underline-offset-4 hover:text-primary"
           href="/terms"
+          prefetch
         >
           Terms of Service
         </Link>{" "}
@@ -88,6 +91,7 @@ export function Login() {
         <Link
           className="underline underline-offset-4 hover:text-primary"
           href="/privacy"
+          prefetch
         >
           Privacy Policy
         </Link>

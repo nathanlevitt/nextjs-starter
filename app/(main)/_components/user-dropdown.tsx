@@ -59,7 +59,7 @@ export function UserDropdown({ user }: UserDropdownProps) {
             Billing
             <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
           </DropdownMenuItem>
-          <Link href={links.account}>
+          <Link href={links.account} prefetch>
             <DropdownMenuItem>Settings</DropdownMenuItem>
           </Link>
           <DropdownMenuItem>New Team</DropdownMenuItem>
