@@ -4,6 +4,7 @@ import { z } from "zod";
 export type ActionState = {
   error?: string;
   success?: string;
+  values?: Record<string, any>;
   [key: string]: any; // Allow any other properties
 };
 
@@ -21,6 +22,7 @@ export function validatedAction<S extends z.ZodType<any, any>, T>(
     if (!result.success) {
       return {
         error: result.error.errors[0]?.message || "An error occurred.",
+        values: Object.fromEntries(formData),
       } as T;
     }
 

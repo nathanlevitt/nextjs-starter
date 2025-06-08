@@ -37,6 +37,7 @@ export const login = validatedAction(loginSchema, async (data) => {
   if (!user) {
     return {
       error: "Invalid email or password. Please try again.",
+      values: data,
     };
   }
 
@@ -45,6 +46,7 @@ export const login = validatedAction(loginSchema, async (data) => {
   if (!isValidPassword) {
     return {
       error: "Invalid email or password. Please try again.",
+      values: data,
     };
   }
 
@@ -77,6 +79,7 @@ export const signup = validatedAction(signupSchema, async (data) => {
   if (existingEmail) {
     return {
       error: "An account with that email already exists. Please try again.",
+      values: data,
     };
   }
 
@@ -89,6 +92,7 @@ export const signup = validatedAction(signupSchema, async (data) => {
   if (existingUsername) {
     return {
       error: "An account with that username already exists. Please try again.",
+      values: data,
     };
   }
 
@@ -106,6 +110,7 @@ export const signup = validatedAction(signupSchema, async (data) => {
   if (!user) {
     return {
       error: "Failed to create account. Please try again.",
+      values: data,
     };
   }
 
@@ -148,6 +153,7 @@ export const sendPasswordResetLink = validatedAction(
     if (!user) {
       return {
         error: "An account with that email does not exist.",
+        values: data,
       };
     }
 
@@ -189,12 +195,14 @@ export const resetPassword = validatedAction(
     if (!dbToken) {
       return {
         error: "Invalid password reset link.",
+        values: data,
       };
     }
 
     if (!isWithinExpirationDate(dbToken.expiresAt)) {
       return {
         error: "Password reset link expired.",
+        values: data,
       };
     }
 

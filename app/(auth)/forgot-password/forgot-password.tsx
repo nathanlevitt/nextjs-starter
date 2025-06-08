@@ -50,7 +50,12 @@ export function ForgotPassword() {
         <form className="grid gap-4" action={formAction}>
           <div className="grid gap-2.5">
             <Label htmlFor="email">Email</Label>
-            <Input type="email" id="email" name="email" />
+            <Input
+              type="email"
+              id="email"
+              name="email"
+              defaultValue={state.values?.email}
+            />
           </div>
 
           <Button type="submit" disabled={pending}>
