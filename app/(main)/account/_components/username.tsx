@@ -31,6 +31,7 @@ export function Username({ baseUrl, user }: UsernameProps) {
   );
 
   useEffect(() => {
+    if (pending) return;
     if (state?.success) {
       console.log("Username updated successfully:", state.success);
       toast("Username updated successfully!", {
@@ -43,7 +44,7 @@ export function Username({ baseUrl, user }: UsernameProps) {
         icon: <AlertTriangle className="h-4 w-4 text-destructive" />,
       });
     }
-  }, [state?.error, state?.success]);
+  }, [pending, state.error, state.success]);
 
   return (
     <form action={formAction}>

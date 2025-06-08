@@ -29,6 +29,7 @@ export function DisplayName({ user }: DisplayNameProps) {
   );
 
   useEffect(() => {
+    if (pending) return;
     if (state?.success) {
       toast("Display name updated successfully!", {
         icon: <CheckCircle className="h-4 w-4" />,
@@ -39,7 +40,7 @@ export function DisplayName({ user }: DisplayNameProps) {
         icon: <AlertTriangle className="h-4 w-4 text-destructive" />,
       });
     }
-  }, [state?.error, state?.success]);
+  }, [pending, state.error, state?.success]);
 
   return (
     <form action={formAction}>
