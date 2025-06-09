@@ -41,24 +41,24 @@ export function Username({ baseUrl, user }: UsernameProps) {
     if (state?.error) {
       console.error("Error updating username:", state.error);
       toast(state.error, {
-        icon: <AlertTriangle className="h-4 w-4 text-destructive" />,
+        icon: <AlertTriangle className="text-destructive h-4 w-4" />,
       });
     }
   }, [pending, state.error, state.success]);
 
   return (
     <form action={formAction}>
-      <Card>
-        <CardHeader className="pb-4">
+      <Card className="pb-0">
+        <CardHeader>
           <CardTitle>Username</CardTitle>
           <CardDescription>
             This is your URL namespace within {APP_TITLE}.
           </CardDescription>
         </CardHeader>
-        <CardContent className="pb-4">
+        <CardContent>
           <div className="grid gap-2">
             <div className="flex">
-              <div className="flex h-full items-center overflow-hidden rounded-md rounded-r-none border border-r-0 bg-muted px-3 text-sm text-muted-foreground sm:shrink-0">
+              <div className="bg-muted text-muted-foreground flex h-full items-center overflow-hidden rounded-md rounded-r-none border border-r-0 px-3 text-sm sm:shrink-0">
                 <span className="truncate">{baseUrl}/</span>
               </div>
               <Input
@@ -70,14 +70,14 @@ export function Username({ baseUrl, user }: UsernameProps) {
             </div>
 
             {state?.error && (
-              <div className="text-sm font-medium text-destructive">
+              <div className="text-destructive text-sm font-medium">
                 {state.error}
               </div>
             )}
           </div>
         </CardContent>
-        <CardFooter className="flex justify-between bg-muted py-2.5">
-          <p className="text-sm text-muted-foreground">
+        <CardFooter className="bg-muted flex justify-between py-2.5">
+          <p className="text-muted-foreground text-sm">
             Please use 48 characters at maximum.
           </p>
           <Button type="submit" disabled={pending}>

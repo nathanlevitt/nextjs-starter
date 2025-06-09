@@ -4,8 +4,6 @@ export default async function AccountSettingsLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <section className="container grid gap-4 py-10 md:py-12">
-      {children}
-    </section>
+    <section className="container grid gap-4 px-4 py-8">{children}</section>
   );
 }

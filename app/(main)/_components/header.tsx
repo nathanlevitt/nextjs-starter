@@ -9,8 +9,8 @@ import { Auth } from "./auth";
 
 export async function Header() {
   return (
-    <header className="sticky top-0 z-10 border-b bg-background/80 p-0">
-      <div className="container flex items-center gap-2 px-2 py-2 lg:px-4">
+    <header className="bg-background/80 sticky top-0 z-10 border-b p-0">
+      <div className="container flex items-center gap-2 px-4 py-2">
         <div className="flex items-center space-x-3">
           <Link
             className="flex items-center justify-center text-sm font-medium"
@@ -22,7 +22,7 @@ export async function Header() {
           </Link>
         </div>
 
-        <div className="ml-auto flex items-center space-x-4">
+        <div className="ml-auto flex items-center">
           <Suspense fallback={<Skeleton className="h-9 w-9 rounded-full" />}>
             <Auth />
           </Suspense>
