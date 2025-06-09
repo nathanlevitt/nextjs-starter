@@ -37,21 +37,21 @@ export function DisplayName({ user }: DisplayNameProps) {
     }
     if (state?.error) {
       toast(state.error, {
-        icon: <AlertTriangle className="h-4 w-4 text-destructive" />,
+        icon: <AlertTriangle className="text-destructive h-4 w-4" />,
       });
     }
   }, [pending, state.error, state?.success]);
 
   return (
     <form action={formAction}>
-      <Card>
-        <CardHeader className="pb-4">
+      <Card className="pb-0">
+        <CardHeader>
           <CardTitle>Display Name</CardTitle>
           <CardDescription>
             Please enter your full name or a display name.
           </CardDescription>
         </CardHeader>
-        <CardContent className="pb-4">
+        <CardContent>
           <div className="grid w-full items-center gap-2">
             <div className="flex flex-col space-y-1.5">
               <Input
@@ -62,14 +62,14 @@ export function DisplayName({ user }: DisplayNameProps) {
             </div>
 
             {state?.error && (
-              <div className="text-sm font-medium text-destructive">
+              <div className="text-destructive text-sm font-medium">
                 {state.error}
               </div>
             )}
           </div>
         </CardContent>
-        <CardFooter className="flex justify-between bg-muted py-2.5">
-          <p className="text-sm text-muted-foreground">
+        <CardFooter className="bg-muted flex justify-between py-2.5">
+          <p className="text-muted-foreground text-sm">
             Please use 32 characters at maximum.
           </p>
           <Button type="submit" disabled={pending}>

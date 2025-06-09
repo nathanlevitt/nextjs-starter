@@ -10,7 +10,7 @@ import { Auth } from "./auth";
 export async function Header() {
   return (
     <header className="bg-background/80 sticky top-0 z-10 border-b p-0">
-      <div className="container flex items-center gap-2 px-2 py-2 lg:px-4">
+      <div className="container flex items-center gap-2 px-4 py-2">
         <div className="flex items-center space-x-3">
           <Link
             className="flex items-center justify-center text-sm font-medium"

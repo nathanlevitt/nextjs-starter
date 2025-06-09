@@ -20,7 +20,7 @@ export default async function AccountSettingsPage() {
     <section className="grid gap-6">
       <div className="space-y-0.5">
         <h2 className="text-2xl font-bold tracking-tight">Settings</h2>
-        <p className="text-muted-foreground">
+        <p className="text-muted-foreground text-sm">
           Manage your account settings and set e-mail preferences.
         </p>
       </div>
