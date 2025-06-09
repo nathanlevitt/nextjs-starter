@@ -17,6 +17,15 @@ export default async function Home() {
       </div>
 
       <Separator />
+
+      {user && (
+        <pre>
+          <code className="text-muted-foreground text-xs">
+            {`// Account details\n`}
+            {JSON.stringify(user, null, 2)}
+          </code>
+        </pre>
+      )}
     </section>
   );
 }
