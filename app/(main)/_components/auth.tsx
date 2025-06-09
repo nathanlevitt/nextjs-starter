@@ -16,16 +16,18 @@ export async function Auth() {
 
   return (
     <>
-      <Link href={links.login} prefetch>
-        <Button variant="link">Log in</Button>
-      </Link>
+      <Button variant="link" asChild>
+        <Link href={links.login} prefetch>
+          Log in
+        </Link>
+      </Button>
 
-      <Link href={links.signup} className="hidden sm:block" prefetch>
-        <Button variant="default">
+      <Button className="hidden sm:ml-1.5 sm:flex" asChild>
+        <Link href={links.signup} prefetch>
           Get started
-          <Icons.arrowRight className="ml-1 h-4 w-4" />
-        </Button>
-      </Link>
+          <Icons.arrowRight className="h-4 w-4" />
+        </Link>
+      </Button>
     </>
   );
 }
