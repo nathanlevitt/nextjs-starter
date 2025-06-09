@@ -37,8 +37,8 @@ importers:
         specifier: ^1.2.3
         version: 1.2.3(react@19.0.0-rc.1)(types-react@19.0.0-rc.1)
       '@react-email/components':
-        specifier: ^0.0.32
-        version: 0.0.32(react-dom@19.0.0-rc.1(react@19.0.0-rc.1))(react@19.0.0-rc.1)
+        specifier: ^0.0.41
+        version: 0.0.41(react-dom@19.0.0-rc.1(react@19.0.0-rc.1))(react@19.0.0-rc.1)
       '@react-email/render':
         specifier: ^1.1.2
         version: 1.1.2(react-dom@19.0.0-rc.1(react@19.0.0-rc.1))(react@19.0.0-rc.1)
@@ -997,8 +997,8 @@ packages:
     peerDependencies:
       react: ^18.0 || ^19.0 || ^19.0.0-rc
 
-  '@react-email/code-block@0.0.11':
-    resolution: {integrity: sha512-4D43p+LIMjDzm66gTDrZch0Flkip5je91mAT7iGs6+SbPyalHgIA+lFQoQwhz/VzHHLxuD0LV6gwmU/WUQ2WEg==}
+  '@react-email/code-block@0.0.13':
+    resolution: {integrity: sha512-4DE4yPSgKEOnZMzcrDvRuD6mxsNxOex0hCYEG9F9q23geYgb2WCCeGBvIUXVzK69l703Dg4Vzrd5qUjl+JfcwA==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       react: ^18.0 || ^19.0 || ^19.0.0-rc
@@ -1015,8 +1015,8 @@ packages:
     peerDependencies:
       react: ^18.0 || ^19.0 || ^19.0.0-rc
 
-  '@react-email/components@0.0.32':
-    resolution: {integrity: sha512-+1Wv7PyVgWfLoj5W0+CvBsJMIfMI6ibcFcIPXNkb2lhKQQASgxSoAedRL1rH0CCaBo6+63tg8y4baHzJonfZbw==}
+  '@react-email/components@0.0.41':
+    resolution: {integrity: sha512-WUI3wHwra3QS0pwrovSU6b0I0f3TvY33ph0y44LuhSYDSQlMRyeOzgoT6HRDY5FXMDF57cHYq9WoKwpwP0yd7Q==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       react: ^18.0 || ^19.0 || ^19.0.0-rc
@@ -1068,24 +1068,17 @@ packages:
     peerDependencies:
       react: ^18.0 || ^19.0 || ^19.0.0-rc
 
-  '@react-email/markdown@0.0.14':
-    resolution: {integrity: sha512-5IsobCyPkb4XwnQO8uFfGcNOxnsg3311GRXhJ3uKv51P7Jxme4ycC/MITnwIZ10w2zx7HIyTiqVzTj4XbuIHbg==}
+  '@react-email/markdown@0.0.15':
+    resolution: {integrity: sha512-UQA9pVm5sbflgtg3EX3FquUP4aMBzmLReLbGJ6DZQZnAskBF36aI56cRykDq1o+1jT+CKIK1CducPYziaXliag==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       react: ^18.0 || ^19.0 || ^19.0.0-rc
 
-  '@react-email/preview@0.0.12':
-    resolution: {integrity: sha512-g/H5fa9PQPDK6WUEG7iTlC19sAktI23qyoiJtMLqQiXFCfWeQMhqjLGKeLSKkfzszqmfJCjZtpSiKtBoOdxp3Q==}
+  '@react-email/preview@0.0.13':
+    resolution: {integrity: sha512-F7j9FJ0JN/A4d7yr+aw28p4uX7VLWs7hTHtLo7WRyw4G+Lit6Zucq4UWKRxJC8lpsUdzVmG7aBJnKOT+urqs/w==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       react: ^18.0 || ^19.0 || ^19.0.0-rc
-
-  '@react-email/render@1.0.4':
-    resolution: {integrity: sha512-8ZXi89d8igBDE6W3zlHBa3GEDWKEUFDAa7i8MvVxnRViQuvsRbibK3ltuPgixxRI5+HgGNCSreBHQKZCkhUdyw==}
-    engines: {node: '>=18.0.0'}
-    peerDependencies:
-      react: ^18.0 || ^19.0 || ^19.0.0-rc
-      react-dom: ^18.0 || ^19.0 || ^19.0.0-rc
 
   '@react-email/render@1.1.2':
     resolution: {integrity: sha512-RnRehYN3v9gVlNMehHPHhyp2RQo7+pSkHDtXPvg3s0GbzM9SQMW4Qrf8GRNvtpLC4gsI+Wt0VatNRUFqjvevbw==}
@@ -1106,20 +1099,14 @@ packages:
     peerDependencies:
       react: ^18.0 || ^19.0 || ^19.0.0-rc
 
-  '@react-email/tailwind@1.0.4':
-    resolution: {integrity: sha512-tJdcusncdqgvTUYZIuhNC6LYTfL9vNTSQpwWdTCQhQ1lsrNCEE4OKCSdzSV3S9F32pi0i0xQ+YPJHKIzGjdTSA==}
-    engines: {node: '>=18.0.0'}
-    peerDependencies:
-      react: ^18.0 || ^19.0 || ^19.0.0-rc
-
   '@react-email/tailwind@1.0.5':
     resolution: {integrity: sha512-BH00cZSeFfP9HiDASl+sPHi7Hh77W5nzDgdnxtsVr/m3uQD9g180UwxcE3PhOfx0vRdLzQUU8PtmvvDfbztKQg==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       react: ^18.0 || ^19.0 || ^19.0.0-rc
 
-  '@react-email/text@0.0.11':
-    resolution: {integrity: sha512-a7nl/2KLpRHOYx75YbYZpWspUbX1DFY7JIZbOv5x0QU8SvwDbJt+Hm01vG34PffFyYvHEXrc6Qnip2RTjljNjg==}
+  '@react-email/text@0.1.4':
+    resolution: {integrity: sha512-cMNE02y8172DocpNGh97uV5HSTawaS4CKG/zOku8Pu+m6ehBKbAjgtQZDIxhgstw8+TWraFB8ltS1DPjfG8nLA==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       react: ^18.0 || ^19.0 || ^19.0.0-rc
@@ -2558,18 +2545,13 @@ packages:
       prettier-plugin-svelte:
         optional: true
 
-  prettier@3.4.2:
-    resolution: {integrity: sha512-e9MewbtFo+Fevyuxn/4rrcDAaq0IYxPGLvObpQjiZBMAzB9IGmzlnG9RZy3FFas+eBMu2vA0CszMeduow5dIuQ==}
-    engines: {node: '>=14'}
-    hasBin: true
-
   prettier@3.5.3:
     resolution: {integrity: sha512-QQtaxnoDJeAkDvDKWCLiwIXkTgRhwYDEQCghU9Z6q03iyek/rxRh/2lC3HB7P8sWT2xC/y5JDctPLBIGzHKbhw==}
     engines: {node: '>=14'}
     hasBin: true
 
-  prismjs@1.29.0:
-    resolution: {integrity: sha512-Kx/1w86q/epKcmte75LNrEoT+lX8pBpavuAbvJWRXar7Hz8jrtF+e3vY751p0R8H9HdArwaCTNDDzHg/ScJK1Q==}
+  prismjs@1.30.0:
+    resolution: {integrity: sha512-DEvV2ZF2r2/63V+tK8hQvrR2ZGn10srHbXviTlcv7Kpzw8jWiNTqbVgjO3IY8RxrrOUF8VPMQQFysYYYv0YZxw==}
     engines: {node: '>=6'}
 
   prop-types@15.8.1:
@@ -3723,9 +3705,9 @@ snapshots:
     dependencies:
       react: 19.0.0-rc.1
 
-  '@react-email/code-block@0.0.11(react@19.0.0-rc.1)':
+  '@react-email/code-block@0.0.13(react@19.0.0-rc.1)':
     dependencies:
-      prismjs: 1.29.0
+      prismjs: 1.30.0
       react: 19.0.0-rc.1
 
   '@react-email/code-inline@0.0.5(react@19.0.0-rc.1)':
@@ -3736,11 +3718,11 @@ snapshots:
     dependencies:
       react: 19.0.0-rc.1
 
-  '@react-email/components@0.0.32(react-dom@19.0.0-rc.1(react@19.0.0-rc.1))(react@19.0.0-rc.1)':
+  '@react-email/components@0.0.41(react-dom@19.0.0-rc.1(react@19.0.0-rc.1))(react@19.0.0-rc.1)':
     dependencies:
       '@react-email/body': 0.0.11(react@19.0.0-rc.1)
       '@react-email/button': 0.0.19(react@19.0.0-rc.1)
-      '@react-email/code-block': 0.0.11(react@19.0.0-rc.1)
+      '@react-email/code-block': 0.0.13(react@19.0.0-rc.1)
       '@react-email/code-inline': 0.0.5(react@19.0.0-rc.1)
       '@react-email/column': 0.0.13(react@19.0.0-rc.1)
       '@react-email/container': 0.0.15(react@19.0.0-rc.1)
@@ -3751,13 +3733,13 @@ snapshots:
       '@react-email/html': 0.0.11(react@19.0.0-rc.1)
       '@react-email/img': 0.0.11(react@19.0.0-rc.1)
       '@react-email/link': 0.0.12(react@19.0.0-rc.1)
-      '@react-email/markdown': 0.0.14(react@19.0.0-rc.1)
-      '@react-email/preview': 0.0.12(react@19.0.0-rc.1)
-      '@react-email/render': 1.0.4(react-dom@19.0.0-rc.1(react@19.0.0-rc.1))(react@19.0.0-rc.1)
+      '@react-email/markdown': 0.0.15(react@19.0.0-rc.1)
+      '@react-email/preview': 0.0.13(react@19.0.0-rc.1)
+      '@react-email/render': 1.1.2(react-dom@19.0.0-rc.1(react@19.0.0-rc.1))(react@19.0.0-rc.1)
       '@react-email/row': 0.0.12(react@19.0.0-rc.1)
       '@react-email/section': 0.0.16(react@19.0.0-rc.1)
-      '@react-email/tailwind': 1.0.4(react@19.0.0-rc.1)
-      '@react-email/text': 0.0.11(react@19.0.0-rc.1)
+      '@react-email/tailwind': 1.0.5(react@19.0.0-rc.1)
+      '@react-email/text': 0.1.4(react@19.0.0-rc.1)
       react: 19.0.0-rc.1
     transitivePeerDependencies:
       - react-dom
@@ -3794,22 +3776,14 @@ snapshots:
     dependencies:
       react: 19.0.0-rc.1
 
-  '@react-email/markdown@0.0.14(react@19.0.0-rc.1)':
+  '@react-email/markdown@0.0.15(react@19.0.0-rc.1)':
     dependencies:
       md-to-react-email: 5.0.5(react@19.0.0-rc.1)
       react: 19.0.0-rc.1
 
-  '@react-email/preview@0.0.12(react@19.0.0-rc.1)':
+  '@react-email/preview@0.0.13(react@19.0.0-rc.1)':
     dependencies:
       react: 19.0.0-rc.1
-
-  '@react-email/render@1.0.4(react-dom@19.0.0-rc.1(react@19.0.0-rc.1))(react@19.0.0-rc.1)':
-    dependencies:
-      html-to-text: 9.0.5
-      prettier: 3.4.2
-      react: 19.0.0-rc.1
-      react-dom: 19.0.0-rc.1(react@19.0.0-rc.1)
-      react-promise-suspense: 0.3.4
 
   '@react-email/render@1.1.2(react-dom@19.0.0-rc.1(react@19.0.0-rc.1))(react@19.0.0-rc.1)':
     dependencies:
@@ -3827,15 +3801,11 @@ snapshots:
     dependencies:
       react: 19.0.0-rc.1
 
-  '@react-email/tailwind@1.0.4(react@19.0.0-rc.1)':
-    dependencies:
-      react: 19.0.0-rc.1
-
   '@react-email/tailwind@1.0.5(react@19.0.0-rc.1)':
     dependencies:
       react: 19.0.0-rc.1
 
-  '@react-email/text@0.0.11(react@19.0.0-rc.1)':
+  '@react-email/text@0.1.4(react@19.0.0-rc.1)':
     dependencies:
       react: 19.0.0-rc.1
 
@@ -5374,11 +5344,9 @@ snapshots:
     dependencies:
       prettier: 3.5.3
 
-  prettier@3.4.2: {}
-
   prettier@3.5.3: {}
 
-  prismjs@1.29.0: {}
+  prismjs@1.30.0: {}
 
   prop-types@15.8.1:
     dependencies:
