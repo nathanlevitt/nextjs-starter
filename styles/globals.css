@@ -110,6 +110,17 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+@utility container {
+  margin-inline: auto;
+  padding-inline: 2rem;
+  @media (width >= --theme(--breakpoint-sm)) {
+    max-width: none;
+  }
+  @media (width >= 1400px) {
+    max-width: 1400px;
+  }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
