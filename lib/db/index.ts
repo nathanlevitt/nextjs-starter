@@ -1,8 +1,11 @@
-import { createKysely } from "@vercel/postgres-kysely";
-import { CamelCasePlugin } from "kysely";
+import { Pool } from "@neondatabase/serverless";
+import { CamelCasePlugin, Kysely, PostgresDialect } from "kysely";
 
 import { Database } from "./schema";
 
-export const db = createKysely<Database>(undefined, {
+const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+
+export const db = new Kysely<Database>({
+  dialect: new PostgresDialect({ pool }),
   plugins: [new CamelCasePlugin()],
 });
