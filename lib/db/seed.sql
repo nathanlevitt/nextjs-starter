@@ -1,5 +1,5 @@
 -- UserTable schema
-CREATE TYPE user_role AS ENUM ("admin", "manager", "support", "customer");
+CREATE TYPE user_role AS ENUM ('admin', 'manager', 'support', 'customer');
 
 CREATE TABLE users (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -38,7 +38,7 @@ CREATE TABLE security_tokens (
 
   -- Prevent multiple active tokens of the same type per user
   UNIQUE (user_id, type)
-)
+);
 
 -- Trigger function to update the updated_at column
 CREATE OR REPLACE FUNCTION update_updated_at_column()
